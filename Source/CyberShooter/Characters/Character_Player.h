@@ -33,6 +33,9 @@ private:
 	UCameraComponent *Camera = nullptr;
 
 	// VARIABLES
+	UPROPERTY(EditAnywhere, BluePrintReadWrite, Category = "Input", meta = (AllowPrivateAccess = "true"))
+	float RotationRate = 50.f;
+
 	UPROPERTY(VisibleAnywhere, BluePrintReadOnly, Category = "States", meta = (AllowPrivateAccess = "true"))
 	bool IsFiring = false;
 
@@ -40,6 +43,10 @@ private:
 	void MoveForward(float AxisValue);
 
 	void MoveRight(float AxisValue);
+
+	void LookUp(float AxisValue);
+
+	void LookRight(float AxisValue);
 
 	void Fire();
 

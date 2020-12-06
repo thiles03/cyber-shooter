@@ -37,6 +37,8 @@ void ACharacter_Player::SetupPlayerInputComponent(UInputComponent *PlayerInputCo
     PlayerInputComponent->BindAxis("MoveRight", this, &ACharacter_Player::MoveRight);
     PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
     PlayerInputComponent->BindAxis("LookRight", this, &APawn::AddControllerYawInput);
+	PlayerInputComponent->BindAxis("LookUpRate", this, &ACharacter_Player::LookUp);
+    PlayerInputComponent->BindAxis("LookRightRate", this, &ACharacter_Player::LookRight);
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 
     // Combat
@@ -56,6 +58,17 @@ void ACharacter_Player::MoveRight(float AxisValue)
     AddMovementInput(GetActorRightVector() * AxisValue);
 }
 
+// Look up
+void ACharacter_Player::LookUp(float AxisValue) 
+{
+	AddControllerPitchInput(RotationRate * AxisValue * GetWorld()->GetDeltaSeconds());
+}
+
+// Look right
+void ACharacter_Player::LookRight(float AxisValue) 
+{
+	AddControllerYawInput(RotationRate * AxisValue * GetWorld()->GetDeltaSeconds());
+}
 
 // Fire weapon
 void ACharacter_Player::Fire()
