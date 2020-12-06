@@ -49,13 +49,13 @@ void ACharacter_Player::SetupPlayerInputComponent(UInputComponent *PlayerInputCo
 // Move forward
 void ACharacter_Player::MoveForward(float AxisValue) 
 {
-    AddMovementInput(GetActorForwardVector() * AxisValue);
+    AddMovementInput(GetActorForwardVector() * AxisValue * Speed);
 }
 
 // Move right
 void ACharacter_Player::MoveRight(float AxisValue) 
 {
-    AddMovementInput(GetActorRightVector() * AxisValue);
+    AddMovementInput(GetActorRightVector() * AxisValue * Speed);
 }
 
 // Look up
@@ -74,12 +74,12 @@ void ACharacter_Player::LookRight(float AxisValue)
 void ACharacter_Player::Fire()
 {
 	UE_LOG(LogTemp, Warning, TEXT("fire"));
-	IsFiring = true;
+	IsAttacking = true;
 }
 
 // Stop firing weapon
 void ACharacter_Player::CheckFire()
 {
 	UE_LOG(LogTemp, Warning, TEXT("check fire"));
-	IsFiring = false;
+	IsAttacking = false;
 }
