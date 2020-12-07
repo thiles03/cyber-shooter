@@ -49,13 +49,13 @@ void ACharacter_Player::SetupPlayerInputComponent(UInputComponent *PlayerInputCo
 // Move forward
 void ACharacter_Player::MoveForward(float AxisValue) 
 {
-    AddMovementInput(GetActorForwardVector() * AxisValue * Speed);
+    AddMovementInput(GetActorForwardVector() * AxisValue);
 }
 
 // Move right
 void ACharacter_Player::MoveRight(float AxisValue) 
 {
-    AddMovementInput(GetActorRightVector() * AxisValue * Speed);
+    AddMovementInput(GetActorRightVector() * AxisValue);
 }
 
 // Look up

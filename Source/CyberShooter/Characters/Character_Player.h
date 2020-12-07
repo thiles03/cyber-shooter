@@ -36,9 +36,6 @@ private:
 	UPROPERTY(EditAnywhere, BluePrintReadWrite, Category = "Movement", meta = (AllowPrivateAccess = "true"))
 	float RotationRate = 50.f;
 
-	UPROPERTY(EditAnywhere, BluePrintReadWrite, Category = "Movement", meta = (AllowPrivateAccess = "true"))
-	float Speed = 1.f;
-
 	UPROPERTY(EditAnywhere, BluePrintReadWrite, Category = "States", meta = (AllowPrivateAccess = "true"))
 	bool IsAttacking = false;
 
