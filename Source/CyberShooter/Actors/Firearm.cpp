@@ -10,11 +10,8 @@ AFirearm::AFirearm()
 	Root = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Root"));
 	Root = RootComponent;
 
-	Offset = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Offset"));
-	Offset->SetupAttachment(Root);
-
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
-	Mesh->SetupAttachment(Offset);
+	Mesh->SetupAttachment(Root);
 }
 
 // Called when the game starts or when spawned
