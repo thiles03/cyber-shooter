@@ -8,10 +8,10 @@ AFirearm::AFirearm()
 	PrimaryActorTick.bCanEverTick = true;
 
 	Root = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Root"));
-	Root = RootComponent;
+	// Root = RootComponent;
 
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
-	Mesh->SetupAttachment(Root);
+	// Mesh->SetupAttachment(Root);
 }
 
 // Called when the game starts or when spawned
