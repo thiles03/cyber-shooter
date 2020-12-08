@@ -2,6 +2,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/InputComponent.h"
+#include "Components/SkeletalMeshComponent.h"
 #include "CyberShooter/Actors/Firearm.h"
 
 // Set default values
@@ -21,7 +22,13 @@ void ACharacter_Player::BeginPlay()
 {
 	Super::BeginPlay();
 
+	// Hide default pistol
+	GetMesh()->HideBoneByName(TEXT("pistol"), EPhysBodyOp::PBO_None);
+	// Spawn selected firearm class in the world
 	Firearm = GetWorld()->SpawnActor<AFirearm>(FirearmClass);
+	// Attach firearm to character mesh
+	Firearm->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform , TEXT("WeaponSocketRight"));
+	Firearm->SetOwner(this);
 }
 
 // Called every frame
