@@ -14,6 +14,8 @@ public:
 	UGrabber();
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
 
+	void Interact();
+
 protected:
 	virtual void BeginPlay() override;
 
@@ -32,15 +34,11 @@ private:
 	bool IsHolding = false;
 
 	// FUNCTIONS
-	void Interact();
-
 	void Grab();
 
 	void Release();
 
 	void FindPhysicsHandle();
-
-	void SetupInputComponent();
 
 	FHitResult GetFirstPhysicsBodyInReach() const;
 

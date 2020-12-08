@@ -7,6 +7,7 @@
 class USpringArmComponent;
 class UCameraComponent;
 class AFirearm;
+class UGrabber;
 
 UCLASS()
 class CYBERSHOOTER_API ACharacter_Player : public ACharacter_Base
@@ -39,6 +40,8 @@ private:
 
 	AFirearm *Firearm;
 
+	UGrabber *Grabber;
+
 	UPROPERTY(EditAnywhere, BluePrintReadWrite, Category = "Movement", meta = (AllowPrivateAccess = "true"))
 	float RotationRate = 50.f;
 
@@ -52,4 +55,6 @@ private:
 	void LookRight(float AxisValue);
 
 	void Fire();
+	
+	void Interact();
 };

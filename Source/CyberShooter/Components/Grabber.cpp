@@ -1,6 +1,6 @@
+#include "Grabber.h"
 #include "Engine/World.h"
 #include "GameFramework/PlayerController.h"
-#include "Grabber.h"
 
 #define OUT
 
@@ -15,7 +15,6 @@ void UGrabber::BeginPlay()
 	Super::BeginPlay();
 
 	FindPhysicsHandle();
-	SetupInputComponent();
 }
 
 // Called every frame
@@ -36,16 +35,6 @@ void UGrabber::FindPhysicsHandle()
 	if (!PhysicsHandle)
 	{
 		UE_LOG(LogTemp, Error, TEXT("No physics handle on %s!"), *GetOwner()->GetName());
-	}
-}
-
-// Check for input component and bind input mappings
-void UGrabber::SetupInputComponent()
-{
-	Input = GetOwner()->FindComponentByClass<UInputComponent>();
-	if (Input)
-	{
-		Input->BindAction("Interact", IE_Pressed, this, &UGrabber::Interact); // Grab
 	}
 }
 

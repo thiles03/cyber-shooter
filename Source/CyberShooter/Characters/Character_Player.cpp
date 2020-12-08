@@ -4,6 +4,7 @@
 #include "Components/InputComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "CyberShooter/Actors/Firearm.h"
+#include "CyberShooter/Components/Grabber.h"
 
 // Set default values
 ACharacter_Player::ACharacter_Player()
@@ -24,11 +25,15 @@ void ACharacter_Player::BeginPlay()
 
 	// Hide default pistol
 	GetMesh()->HideBoneByName(TEXT("pistol"), EPhysBodyOp::PBO_None);
+
 	// Spawn selected firearm class in the world
 	Firearm = GetWorld()->SpawnActor<AFirearm>(FirearmClass);
 	// Attach firearm to character mesh
 	Firearm->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform , TEXT("WeaponSocketRight"));
 	Firearm->SetOwner(this);
+
+	// Find Grabber component
+	Grabber = FindComponentByClass<UGrabber>();
 }
 
 // Called every frame
@@ -50,6 +55,9 @@ void ACharacter_Player::SetupPlayerInputComponent(UInputComponent *PlayerInputCo
 	PlayerInputComponent->BindAxis("LookUpRate", this, &ACharacter_Player::LookUp);
     PlayerInputComponent->BindAxis("LookRightRate", this, &ACharacter_Player::LookRight);
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
+
+	// Interaction
+	PlayerInputComponent->BindAction("Interact", IE_Pressed, this, &ACharacter_Player::Interact);
 
     // Combat
 	PlayerInputComponent->BindAction("Attack", IE_Pressed, this, &ACharacter_Player::Fire);
@@ -83,4 +91,13 @@ void ACharacter_Player::LookRight(float AxisValue)
 void ACharacter_Player::Fire()
 {
 	Firearm->Fire();
+}
+
+// Interact
+void ACharacter_Player::Interact()
+{
+	if (Grabber)
+	{
+		Grabber->Interact();
+	}
 }
