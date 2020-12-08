@@ -53,7 +53,6 @@ void ACharacter_Player::SetupPlayerInputComponent(UInputComponent *PlayerInputCo
 
     // Combat
 	PlayerInputComponent->BindAction("Attack", IE_Pressed, this, &ACharacter_Player::Fire);
-	PlayerInputComponent->BindAction("Attack", IE_Released, this, &ACharacter_Player::CheckFire);
 }
 
 // Move forward
@@ -83,13 +82,5 @@ void ACharacter_Player::LookRight(float AxisValue)
 // Fire weapon
 void ACharacter_Player::Fire()
 {
-	UE_LOG(LogTemp, Warning, TEXT("fire"));
-	IsAttacking = true;
-}
-
-// Stop firing weapon
-void ACharacter_Player::CheckFire()
-{
-	UE_LOG(LogTemp, Warning, TEXT("check fire"));
-	IsAttacking = false;
+	Firearm->Fire();
 }

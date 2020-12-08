@@ -15,14 +15,17 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	void Fire();
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 private:
-	UPROPERTY(VisibleAnywhere, BluePrintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
+	//COMPONENTS
+	UPROPERTY(VisibleAnywhere, Category = "Components")
 	USceneComponent *Root;
 
-	UPROPERTY(VisibleAnywhere, BluePrintReadWrite, Category = "Components", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, Category = "Components")
 	UStaticMeshComponent *Mesh;
 };

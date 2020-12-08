@@ -7,11 +7,11 @@ AFirearm::AFirearm()
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	Root = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Root"));
-	// Root = RootComponent;
+	Root = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
+	SetRootComponent(Root);
 
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
-	// Mesh->SetupAttachment(Root);
+	Mesh->SetupAttachment(Root);
 }
 
 // Called when the game starts or when spawned
@@ -24,4 +24,9 @@ void AFirearm::BeginPlay()
 void AFirearm::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+}
+
+void AFirearm::Fire()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Fire"));
 }

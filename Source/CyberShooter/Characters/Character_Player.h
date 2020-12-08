@@ -42,9 +42,6 @@ private:
 	UPROPERTY(EditAnywhere, BluePrintReadWrite, Category = "Movement", meta = (AllowPrivateAccess = "true"))
 	float RotationRate = 50.f;
 
-	UPROPERTY(EditAnywhere, BluePrintReadWrite, Category = "States", meta = (AllowPrivateAccess = "true"))
-	bool IsAttacking = false;
-
 	// FUNCTIONS
 	void MoveForward(float AxisValue);
 
@@ -55,6 +52,4 @@ private:
 	void LookRight(float AxisValue);
 
 	void Fire();
-
-	void CheckFire();
 };
