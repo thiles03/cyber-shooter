@@ -6,6 +6,7 @@
 
 class USpringArmComponent;
 class UCameraComponent;
+class AFirearm;
 
 UCLASS()
 class CYBERSHOOTER_API ACharacter_Player : public ACharacter_Base
@@ -33,6 +34,11 @@ private:
 	UCameraComponent *Camera = nullptr;
 
 	// VARIABLES
+	UPROPERTY(EditDefaultsOnly, Category = "Weapon", meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<AFirearm> FirearmClass;
+
+	AFirearm *Firearm;
+
 	UPROPERTY(EditAnywhere, BluePrintReadWrite, Category = "Movement", meta = (AllowPrivateAccess = "true"))
 	float RotationRate = 50.f;
 

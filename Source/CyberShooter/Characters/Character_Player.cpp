@@ -2,6 +2,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/InputComponent.h"
+#include "CyberShooter/Actors/Firearm.h"
 
 // Set default values
 ACharacter_Player::ACharacter_Player()
@@ -19,6 +20,8 @@ ACharacter_Player::ACharacter_Player()
 void ACharacter_Player::BeginPlay()
 {
 	Super::BeginPlay();
+
+	Firearm = GetWorld()->SpawnActor<AFirearm>(FirearmClass);
 }
 
 // Called every frame
