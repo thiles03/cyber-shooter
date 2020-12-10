@@ -1,6 +1,9 @@
 #include "Firearm.h"
 #include "Components/StaticMeshComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "DrawDebugHelpers.h"
+
+#define OUT
 
 // Sets default values
 AFirearm::AFirearm()
@@ -27,7 +30,21 @@ void AFirearm::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
+// Spawn particle FX and handle weapon firing
 void AFirearm::Fire()
 {
-	UGameplayStatics::SpawnEmitterAttached(MuzzleFlash, Mesh, TEXT("MuzzleSocket"));
+	UGameplayStatics::SpawnEmitterAttached(MuzzleFlash, Mesh, TEXT("MuzzleSocket")); // Spawn VFX
+
+	// Get the weapon owner's controller
+	APawn* OwnerPawn = Cast<APawn>(GetOwner());
+	if (OwnerPawn == nullptr) return;
+	AController *OwnerController = OwnerPawn->GetController();
+	if (OwnerController == nullptr) return;
+
+	// Get playercamera location and rotation
+	FVector PlayerViewLocation;
+	FRotator PlayerViewRotation;
+	OwnerController->GetPlayerViewPoint(OUT PlayerViewLocation, OUT PlayerViewRotation);
+
+	DrawDebugCamera(GetWorld(), PlayerViewLocation, PlayerViewRotation, 90, 2, FColor::Red, true);
 }
