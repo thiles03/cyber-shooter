@@ -1,5 +1,6 @@
 #include "Firearm.h"
 #include "Components/StaticMeshComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 AFirearm::AFirearm()
@@ -28,5 +29,5 @@ void AFirearm::Tick(float DeltaTime)
 
 void AFirearm::Fire()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Fire"));
+	UGameplayStatics::SpawnEmitterAttached(MuzzleFlash, Mesh, TEXT("MuzzleSocket"));
 }

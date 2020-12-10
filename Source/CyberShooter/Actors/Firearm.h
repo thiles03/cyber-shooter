@@ -28,4 +28,7 @@ private:
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	UStaticMeshComponent *Mesh;
+
+	UPROPERTY(EditAnywhere)
+	UParticleSystem *MuzzleFlash;
 };
