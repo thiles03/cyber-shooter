@@ -46,5 +46,8 @@ void AFirearm::Fire()
 	FRotator PlayerViewRotation;
 	OwnerController->GetPlayerViewPoint(OUT PlayerViewLocation, OUT PlayerViewRotation);
 
-	DrawDebugCamera(GetWorld(), PlayerViewLocation, PlayerViewRotation, 90, 2, FColor::Red, true);
+	FVector TraceEnd = PlayerViewLocation + PlayerViewRotation.Vector() * MaxRange;
+	// TODO - Linetrace
+
+	DrawDebugPoint(GetWorld(), PlayerViewLocation, 2, FColor::Red, true);
 }
