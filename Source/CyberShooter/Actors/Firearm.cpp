@@ -46,17 +46,15 @@ void AFirearm::Fire()
 	FRotator PlayerViewRotation;
 	OwnerController->GetPlayerViewPoint(OUT PlayerViewLocation, OUT PlayerViewRotation);
 
+	// Line trace from viewpoint and return hit
 	FVector TraceEnd = PlayerViewLocation + PlayerViewRotation.Vector() * MaxRange;
-	// TODO - Linetrace
-
 	FHitResult Hit;
-	bool bSuccess = GetWorld()->LineTraceSingleByChannel(Hit, PlayerViewLocation, TraceEnd, ECollisionChannel::ECC_GameTraceChannel1);
+	bool bSuccess = GetWorld()->LineTraceSingleByChannel(OUT Hit, PlayerViewLocation, TraceEnd, ECollisionChannel::ECC_GameTraceChannel1);
+
 	if (bSuccess)
 	{
+		// Spawn impact VFX at hit location
 		FVector ShotDirection = -PlayerViewRotation.Vector();
-		DrawDebugPoint(GetWorld(), Hit.Location, 20, FColor::Red, true);
-		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), Impact, Hit.Location, ShotDirection.Rotation());
+		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ImpactEffect, Hit.Location, ShotDirection.Rotation());
 	}
-
-
 }
