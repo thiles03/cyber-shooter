@@ -32,6 +32,9 @@ private:
 	UPROPERTY(EditAnywhere)
 	UParticleSystem *MuzzleFlash;
 
+	UPROPERTY(EditAnywhere)
+	UParticleSystem *ImpactEffect;
+
 	// VARIABLES
 	float MaxRange = 30000;
 };

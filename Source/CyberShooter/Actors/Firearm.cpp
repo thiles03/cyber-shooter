@@ -49,5 +49,14 @@ void AFirearm::Fire()
 	FVector TraceEnd = PlayerViewLocation + PlayerViewRotation.Vector() * MaxRange;
 	// TODO - Linetrace
 
-	DrawDebugPoint(GetWorld(), PlayerViewLocation, 2, FColor::Red, true);
+	FHitResult Hit;
+	bool bSuccess = GetWorld()->LineTraceSingleByChannel(Hit, PlayerViewLocation, TraceEnd, ECollisionChannel::ECC_GameTraceChannel1);
+	if (bSuccess)
+	{
+		FVector ShotDirection = -PlayerViewRotation.Vector();
+		DrawDebugPoint(GetWorld(), Hit.Location, 20, FColor::Red, true);
+		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), Impact, Hit.Location, ShotDirection.Rotation());
+	}
+
+
 }
