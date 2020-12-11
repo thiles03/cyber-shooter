@@ -56,6 +56,14 @@ void AFirearm::Fire()
 		// Spawn impact VFX at hit location
 		FVector ShotDirection = -PlayerViewRotation.Vector();
 		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ImpactEffect, Hit.Location, ShotDirection.Rotation());
-		FPointDamageEvent DamageEvent()
+
+		// Do damage to hit actor
+		AActor *HitActor = Hit.GetActor();
+		if (HitActor != nullptr)
+		{
+			FPointDamageEvent DamageEvent(Damage, Hit, ShotDirection, nullptr);
+			HitActor->TakeDamage(Damage, DamageEvent, OwnerController, this);
+		}
+
 	}
 }
