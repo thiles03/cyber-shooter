@@ -36,7 +36,7 @@ void AFirearm::Fire()
 	UGameplayStatics::SpawnEmitterAttached(MuzzleFlash, Mesh, TEXT("MuzzleSocket")); // Spawn VFX
 
 	// Get the weapon owner's controller
-	APawn* OwnerPawn = Cast<APawn>(GetOwner());
+	APawn *OwnerPawn = Cast<APawn>(GetOwner());
 	if (OwnerPawn == nullptr) return;
 	AController *OwnerController = OwnerPawn->GetController();
 	if (OwnerController == nullptr) return;
@@ -64,6 +64,5 @@ void AFirearm::Fire()
 			FPointDamageEvent DamageEvent(Damage, Hit, -ShotOppositeDirection, nullptr);
 			HitActor->TakeDamage(Damage, DamageEvent, OwnerController, this);
 		}
-
 	}
 }
