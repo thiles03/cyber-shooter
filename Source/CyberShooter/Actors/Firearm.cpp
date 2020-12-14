@@ -35,16 +35,16 @@ void AFirearm::Fire()
 {
 	UGameplayStatics::SpawnEmitterAttached(MuzzleFlash, Mesh, TEXT("MuzzleSocket")); // Spawn VFX
 
-	// Get the weapon owner's controller
-	APawn *OwnerPawn = Cast<APawn>(GetOwner());
-	if (OwnerPawn == nullptr) return;
-	AController *OwnerController = OwnerPawn->GetController();
-	if (OwnerController == nullptr) return;
+	// Get the player controller
+	APawn *PlayerPawn = Cast<APawn>(GetOwner());
+	if (PlayerPawn == nullptr) return;
+	AController *PlayerController = PlayerPawn->GetController();
+	if (PlayerController == nullptr) return;
 
 	// Get playercamera location and rotation
 	FVector PlayerViewLocation;
 	FRotator PlayerViewRotation;
-	OwnerController->GetPlayerViewPoint(OUT PlayerViewLocation, OUT PlayerViewRotation);
+	PlayerController->GetPlayerViewPoint(OUT PlayerViewLocation, OUT PlayerViewRotation);
 
 	// Line trace from viewpoint and return hit
 	FVector TraceEnd = PlayerViewLocation + PlayerViewRotation.Vector() * MaxRange;
@@ -62,7 +62,7 @@ void AFirearm::Fire()
 		if (HitActor != nullptr)
 		{
 			FPointDamageEvent DamageEvent(Damage, Hit, -ShotOppositeDirection, nullptr);
-			HitActor->TakeDamage(Damage, DamageEvent, OwnerController, this);
+			HitActor->TakeDamage(Damage, DamageEvent, PlayerController, this);
 		}
 	}
 }

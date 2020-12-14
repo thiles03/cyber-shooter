@@ -8,8 +8,8 @@ UCLASS()
 class CYBERSHOOTER_API AFirearm : public AActor
 {
 	GENERATED_BODY()
-	
-public:	
+
+public:
 	AFirearm();
 
 	// Called every frame
@@ -37,7 +37,7 @@ private:
 
 	// VARIABLES
 	UPROPERTY(EditAnywhere)
-	float MaxRange = 30000;
+	float MaxRange = 5000; // in cm
 
 	UPROPERTY(EditAnywhere)
 	float Damage = 10;
