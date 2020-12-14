@@ -1,10 +1,11 @@
 #include "Character_Player.h"
-#include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/InputComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "CyberShooter/Actors/Firearm.h"
 #include "CyberShooter/Components/Grabber.h"
+#include "GameFramework/SpringArmComponent.h"
+#include "Kismet/KismetMathLibrary.h"
 
 // Set default values
 ACharacter_Player::ACharacter_Player()
@@ -66,13 +67,15 @@ void ACharacter_Player::SetupPlayerInputComponent(UInputComponent *PlayerInputCo
 // Move forward
 void ACharacter_Player::MoveForward(float AxisValue) 
 {
-    AddMovementInput(GetActorForwardVector() * AxisValue);
+	FVector Direction = UKismetMathLibrary::GetForwardVector(FRotator(0.0f, GetControlRotation().Yaw, 0.0f));
+    AddMovementInput(Direction, AxisValue);
 }
 
 // Move right
-void ACharacter_Player::MoveRight(float AxisValue) 
+void ACharacter_Player::MoveRight(float AxisValue)
 {
-    AddMovementInput(GetActorRightVector() * AxisValue);
+	FVector Direction = UKismetMathLibrary::GetRightVector(FRotator(0.0f, GetControlRotation().Yaw, 0.0f));
+    AddMovementInput(Direction, AxisValue);
 }
 
 // Look up gamepad
