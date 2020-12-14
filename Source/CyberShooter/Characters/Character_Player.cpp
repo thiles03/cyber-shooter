@@ -96,12 +96,14 @@ void ACharacter_Player::LookRight(float AxisValue)
 void ACharacter_Player::Aim()
 {
 	IsAiming = true;
+	ACharacter_Base::SetSpeed(MaxSpeed / 2);
 }
 
 // Stop aiming
 void ACharacter_Player::ResetAim()
 {
 	IsAiming = false;
+	ACharacter_Base::SetSpeed(MaxSpeed);
 }
 
 // Fire weapon

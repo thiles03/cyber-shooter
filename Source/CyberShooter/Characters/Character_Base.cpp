@@ -1,4 +1,6 @@
 #include "Character_Base.h"
+#include "GameFramework/Character.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 ACharacter_Base::ACharacter_Base()
 {
@@ -11,6 +13,7 @@ void ACharacter_Base::BeginPlay()
 	Super::BeginPlay();
 
 	CurrentHealth = MaxHealth;
+	MaxSpeed = GetCharacterMovement()->MaxWalkSpeed;
 }
 
 // Called every frame
@@ -26,7 +29,7 @@ void ACharacter_Base::SetupPlayerInputComponent(UInputComponent *PlayerInputComp
 }
 
 // Do damage to the character
-float ACharacter_Base::TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) 
+float ACharacter_Base::TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEvent, class AController *EventInstigator, AActor *DamageCauser)
 {
 	float DamageToApply = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 	DamageToApply = FMath::Min(CurrentHealth, DamageToApply);
@@ -36,12 +39,19 @@ float ACharacter_Base::TakeDamage(float DamageAmount, struct FDamageEvent const&
 	{
 		Die();
 	}
-	
+
 	return DamageToApply;
 }
 
-void ACharacter_Base::Die() 
+// Death handler
+void ACharacter_Base::Die()
 {
 	IsDead = true;
 }
 
+// Set move speed
+void ACharacter_Base::SetSpeed(float Speed)
+{
+	UCharacterMovementComponent *MovementComponent = GetCharacterMovement();
+	MovementComponent->MaxWalkSpeed = Speed;
+}

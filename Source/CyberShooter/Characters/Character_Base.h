@@ -4,6 +4,8 @@
 #include "GameFramework/Character.h"
 #include "Character_Base.generated.h"
 
+class UCharacterMovementComponent;
+
 UCLASS()
 class CYBERSHOOTER_API ACharacter_Base : public ACharacter
 {
@@ -22,8 +24,13 @@ public:
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
 
 protected:
+	UPROPERTY(VisibleAnywhere, Category = "Stats")
+	float MaxSpeed;
+	
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	void SetSpeed(float Speed);
 
 private:
 	// VARIABLES
@@ -32,6 +39,7 @@ private:
 
 	UPROPERTY(VisibleAnywhere, Category = "Stats")
 	float CurrentHealth;
+
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Stats", meta = (AllowPrivateAccess = "true"))
 	bool IsDead = false;
