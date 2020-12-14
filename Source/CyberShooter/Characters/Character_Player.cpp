@@ -12,7 +12,7 @@ ACharacter_Player::ACharacter_Player()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
-    SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("Spring Arm"));
+	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("Spring Arm"));
 	SpringArm->SetupAttachment(RootComponent);
 
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
@@ -30,7 +30,7 @@ void ACharacter_Player::BeginPlay()
 	// Spawn selected firearm class in the world
 	Firearm = GetWorld()->SpawnActor<AFirearm>(FirearmClass);
 	// Attach firearm to character mesh
-	Firearm->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform , TEXT("WeaponSocketRight"));
+	Firearm->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("WeaponSocketRight"));
 	Firearm->SetOwner(this);
 
 	// Find Grabber component
@@ -48,46 +48,60 @@ void ACharacter_Player::SetupPlayerInputComponent(UInputComponent *PlayerInputCo
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-    // Movement
-    PlayerInputComponent->BindAxis("MoveForward", this, &ACharacter_Player::MoveForward);
-    PlayerInputComponent->BindAxis("MoveRight", this, &ACharacter_Player::MoveRight);
-    PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
-    PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
+	// Movement
+	PlayerInputComponent->BindAxis("MoveForward", this, &ACharacter_Player::MoveForward);
+	PlayerInputComponent->BindAxis("MoveRight", this, &ACharacter_Player::MoveRight);
+	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
+	PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
 	PlayerInputComponent->BindAxis("LookUpRate", this, &ACharacter_Player::LookUp);
-    PlayerInputComponent->BindAxis("LookRightRate", this, &ACharacter_Player::LookRight);
+	PlayerInputComponent->BindAxis("LookRightRate", this, &ACharacter_Player::LookRight);
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 
 	// Interaction
 	PlayerInputComponent->BindAction("Interact", IE_Pressed, this, &ACharacter_Player::Interact);
 
-    // Combat
+	// Combat
+	PlayerInputComponent->BindAction("Aim", IE_Pressed, this, &ACharacter_Player::Aim);
+	PlayerInputComponent->BindAction("Aim", IE_Released, this, &ACharacter_Player::ResetAim);
 	PlayerInputComponent->BindAction("Attack", IE_Pressed, this, &ACharacter_Player::Fire);
 }
 
 // Move forward
-void ACharacter_Player::MoveForward(float AxisValue) 
+void ACharacter_Player::MoveForward(float AxisValue)
 {
 	FVector Direction = UKismetMathLibrary::GetForwardVector(FRotator(0.0f, GetControlRotation().Yaw, 0.0f));
-    AddMovementInput(Direction, AxisValue);
+	AddMovementInput(Direction, AxisValue);
 }
 
 // Move right
 void ACharacter_Player::MoveRight(float AxisValue)
 {
 	FVector Direction = UKismetMathLibrary::GetRightVector(FRotator(0.0f, GetControlRotation().Yaw, 0.0f));
-    AddMovementInput(Direction, AxisValue);
+	AddMovementInput(Direction, AxisValue);
 }
 
 // Look up gamepad
-void ACharacter_Player::LookUp(float AxisValue) 
+void ACharacter_Player::LookUp(float AxisValue)
 {
 	AddControllerPitchInput(RotationRate * AxisValue * GetWorld()->GetDeltaSeconds());
 }
 
 // Look right gamepad
-void ACharacter_Player::LookRight(float AxisValue) 
+void ACharacter_Player::LookRight(float AxisValue)
 {
 	AddControllerYawInput(RotationRate * AxisValue * GetWorld()->GetDeltaSeconds());
+}
+
+// Aim weapon
+void ACharacter_Player::Aim()
+{
+	IsAiming = true;
+}
+
+// Stop aiming
+void ACharacter_Player::ResetAim()
+{
+	IsAiming = false;
 }
 
 // Fire weapon
