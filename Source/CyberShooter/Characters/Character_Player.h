@@ -42,6 +42,15 @@ private:
 
 	UGrabber *Grabber;
 
+	UPROPERTY(EditAnywhere, BluePrintReadWrite, Category = "Camera", meta = (AllowPrivateAccess = "true"))
+	float FOV = 90.f;
+
+	UPROPERTY(EditAnywhere, BluePrintReadWrite, Category = "Camera", meta = (AllowPrivateAccess = "true"))
+	float AimFOV = 50.f;
+
+	UPROPERTY(EditAnywhere, BluePrintReadWrite, Category = "Movement", meta = (AllowPrivateAccess = "true"))
+	float AimSpeed = 300.f;
+
 	UPROPERTY(EditAnywhere, BluePrintReadWrite, Category = "Movement", meta = (AllowPrivateAccess = "true"))
 	float RotationRate = 50.f;
 

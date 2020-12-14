@@ -24,6 +24,10 @@ void ACharacter_Player::BeginPlay()
 {
 	Super::BeginPlay();
 
+	Camera->FieldOfView = FOV;
+
+	// TODO - WEAPON CHANGE FUNCTIONALITY
+
 	// Hide default pistol
 	GetMesh()->HideBoneByName(TEXT("pistol"), EPhysBodyOp::PBO_None);
 
@@ -96,7 +100,8 @@ void ACharacter_Player::LookRight(float AxisValue)
 void ACharacter_Player::Aim()
 {
 	IsAiming = true;
-	ACharacter_Base::SetSpeed(MaxSpeed / 2);
+	ACharacter_Base::SetSpeed(AimSpeed);
+	Camera->SetFieldOfView(AimFOV);
 }
 
 // Stop aiming
@@ -104,6 +109,7 @@ void ACharacter_Player::ResetAim()
 {
 	IsAiming = false;
 	ACharacter_Base::SetSpeed(MaxSpeed);
+	Camera->SetFieldOfView(FOV);
 }
 
 // Fire weapon

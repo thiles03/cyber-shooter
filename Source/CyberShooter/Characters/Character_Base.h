@@ -4,8 +4,6 @@
 #include "GameFramework/Character.h"
 #include "Character_Base.generated.h"
 
-class UCharacterMovementComponent;
-
 UCLASS()
 class CYBERSHOOTER_API ACharacter_Base : public ACharacter
 {
@@ -25,7 +23,7 @@ public:
 
 protected:
 	UPROPERTY(VisibleAnywhere, Category = "Stats")
-	float MaxSpeed;
+	float MaxSpeed = 600.f;
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

@@ -13,7 +13,7 @@ void ACharacter_Base::BeginPlay()
 	Super::BeginPlay();
 
 	CurrentHealth = MaxHealth;
-	MaxSpeed = GetCharacterMovement()->MaxWalkSpeed;
+	GetCharacterMovement()->MaxWalkSpeed = MaxSpeed;
 }
 
 // Called every frame
@@ -52,6 +52,5 @@ void ACharacter_Base::Die()
 // Set move speed
 void ACharacter_Base::SetSpeed(float Speed)
 {
-	UCharacterMovementComponent *MovementComponent = GetCharacterMovement();
-	MovementComponent->MaxWalkSpeed = Speed;
+	GetCharacterMovement()->MaxWalkSpeed = Speed;
 }
