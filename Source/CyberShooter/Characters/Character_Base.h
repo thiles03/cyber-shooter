@@ -26,7 +26,7 @@ public:
 protected:
 	UPROPERTY(VisibleAnywhere, Category = "Stats")
 	float MaxSpeed;
-	
+
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
@@ -39,7 +39,6 @@ private:
 
 	UPROPERTY(VisibleAnywhere, Category = "Stats")
 	float CurrentHealth;
-
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Stats", meta = (AllowPrivateAccess = "true"))
 	bool IsDead = false;
