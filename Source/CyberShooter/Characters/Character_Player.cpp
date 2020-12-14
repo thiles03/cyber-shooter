@@ -51,7 +51,7 @@ void ACharacter_Player::SetupPlayerInputComponent(UInputComponent *PlayerInputCo
     PlayerInputComponent->BindAxis("MoveForward", this, &ACharacter_Player::MoveForward);
     PlayerInputComponent->BindAxis("MoveRight", this, &ACharacter_Player::MoveRight);
     PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
-    PlayerInputComponent->BindAxis("LookRight", this, &APawn::AddControllerYawInput);
+    PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
 	PlayerInputComponent->BindAxis("LookUpRate", this, &ACharacter_Player::LookUp);
     PlayerInputComponent->BindAxis("LookRightRate", this, &ACharacter_Player::LookRight);
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
@@ -75,13 +75,13 @@ void ACharacter_Player::MoveRight(float AxisValue)
     AddMovementInput(GetActorRightVector() * AxisValue);
 }
 
-// Look up
+// Look up gamepad
 void ACharacter_Player::LookUp(float AxisValue) 
 {
 	AddControllerPitchInput(RotationRate * AxisValue * GetWorld()->GetDeltaSeconds());
 }
 
-// Look right
+// Look right gamepad
 void ACharacter_Player::LookRight(float AxisValue) 
 {
 	AddControllerYawInput(RotationRate * AxisValue * GetWorld()->GetDeltaSeconds());
