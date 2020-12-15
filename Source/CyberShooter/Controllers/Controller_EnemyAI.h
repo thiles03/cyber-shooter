@@ -9,7 +9,17 @@ class CYBERSHOOTER_API AController_EnemyAI : public AAIController
 {
 	GENERATED_BODY()
 
+public:
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;	
+
+private:
+	APawn* PlayerPawn;
+
+	UPROPERTY(EditAnywhere)
+	float AcceptanceRadius = 200.f;
 };
