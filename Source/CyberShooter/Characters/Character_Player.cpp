@@ -154,9 +154,9 @@ void ACharacter_Player::RotateActorToView()
 	PlayerController->GetPlayerViewPoint(OUT PlayerViewLocation, OUT PlayerViewRotation);
 
 	// Rotate player to face camera direction
-	float TargetYaw = FMath::Lerp (GetActorRotation().Yaw, PlayerViewRotation.Yaw, 0.2f);
+	float TargetYaw = FMath::Lerp (GetActorRotation().Yaw, PlayerViewRotation.Yaw, 0.3f);
 	FRotator TargetRotation = FRotator(GetActorRotation().Roll, TargetYaw, GetActorRotation().Pitch);
-	SetActorRotation(TargetRotation);
+	SetActorRotation(TargetRotation.Quaternion());
 }
 
 void ACharacter_Player::SetupTimeline() 
