@@ -126,9 +126,7 @@ void ACharacter_Player::Aim()
 	FRotator PlayerViewRotation;
 	PlayerController->GetPlayerViewPoint(OUT PlayerViewLocation, OUT PlayerViewRotation);
 
-	FQuat DirectionToFace = FQuat::Slerp(GetActorRotation().Quaternion(), PlayerViewRotation.Quaternion(), 0.5f);
-	FRotator NewRotation = DirectionToFace.Rotator();
-	SetActorRotation(NewRotation);
+	SetActorRotation(PlayerViewRotation);
 }
 
 // Stop aiming
