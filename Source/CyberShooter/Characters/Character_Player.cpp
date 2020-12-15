@@ -9,7 +9,6 @@
 #include "GameFramework/PlayerController.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Kismet/KismetMathLibrary.h"
-#include "Math/Vector.h"
 
 // Set default values
 ACharacter_Player::ACharacter_Player()
@@ -147,16 +146,17 @@ void ACharacter_Player::ResetAim()
 
 void ACharacter_Player::RotateActorToView() 
 {
-	// Get playercamera location and rotation
 	AController *PlayerController = GetController();
+
+	// Get player camera location and rotation
 	FVector PlayerViewLocation;
 	FRotator PlayerViewRotation;
 	PlayerController->GetPlayerViewPoint(OUT PlayerViewLocation, OUT PlayerViewRotation);
 
-
-	// TODO - Slerp it
-
-	SetActorRotation(PlayerViewRotation);
+	// Rotate player to face camera direction
+	float TargetYaw = FMath::Lerp (GetActorRotation().Yaw, PlayerViewRotation.Yaw, 0.2f);
+	FRotator TargetRotation = FRotator(GetActorRotation().Roll, TargetYaw, GetActorRotation().Pitch);
+	SetActorRotation(TargetRotation);
 }
 
 void ACharacter_Player::SetupTimeline() 
@@ -177,3 +177,4 @@ void ACharacter_Player::TimelineFloatReturn(float Value)
 {
 	Camera->SetFieldOfView(FMath::Lerp(FOV, AimFOV, Value));
 }
+
