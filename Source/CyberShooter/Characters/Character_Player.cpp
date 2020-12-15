@@ -6,6 +6,7 @@
 #include "Curves/CurveFloat.h"
 #include "CyberShooter/Actors/Firearm.h"
 #include "CyberShooter/Components/Grabber.h"
+#include "GameFramework/PlayerController.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Kismet/KismetMathLibrary.h"
 
@@ -118,6 +119,16 @@ void ACharacter_Player::Aim()
 	IsAiming = true;
 	ACharacter_Base::SetSpeed(AimSpeed);
 	FOVTimeline.Play();
+
+	// Get playercamera location and rotation
+	AController *PlayerController = GetController();
+	FVector PlayerViewLocation;
+	FRotator PlayerViewRotation;
+	PlayerController->GetPlayerViewPoint(OUT PlayerViewLocation, OUT PlayerViewRotation);
+
+	FQuat DirectionToFace = FQuat::Slerp(GetActorRotation().Quaternion(), PlayerViewRotation.Quaternion(), 0.5f);
+	FRotator NewRotation = DirectionToFace.Rotator();
+	SetActorRotation(NewRotation);
 }
 
 // Stop aiming
