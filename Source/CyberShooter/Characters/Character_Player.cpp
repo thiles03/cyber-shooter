@@ -2,6 +2,8 @@
 #include "Camera/CameraComponent.h"
 #include "Components/InputComponent.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "Components/TimelineComponent.h"
+#include "Curves/CurveFloat.h"
 #include "CyberShooter/Actors/Firearm.h"
 #include "CyberShooter/Components/Grabber.h"
 #include "GameFramework/SpringArmComponent.h"
@@ -17,6 +19,8 @@ ACharacter_Player::ACharacter_Player()
 
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	Camera->SetupAttachment(SpringArm);
+
+	Grabber = CreateDefaultSubobject<UGrabber>(TEXT("Grabber"));
 }
 
 // Called when the game starts or when spawned
@@ -24,7 +28,21 @@ void ACharacter_Player::BeginPlay()
 {
 	Super::BeginPlay();
 
-	Camera->FieldOfView = FOV;
+	if (fCurve)
+	{
+		// Bind timeline delegate and add float track
+		FOnTimelineFloat TimelineProgress;
+		TimelineProgress.BindUFunction(this, FName("TimelineFloatReturn"));
+		FOVTimeline.AddInterpFloat(fCurve, TimelineProgress);
+
+		// Setting FOVs
+		FOV = Camera->FieldOfView;
+		AimFOV = FOV - FOVOffset;
+
+		// Setting timeline's settings before start
+		FOVTimeline.SetLooping(false);
+	}
+
 
 	// TODO - WEAPON CHANGE FUNCTIONALITY
 
@@ -36,15 +54,13 @@ void ACharacter_Player::BeginPlay()
 	// Attach firearm to character mesh
 	Firearm->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("WeaponSocketRight"));
 	Firearm->SetOwner(this);
-
-	// Find Grabber component
-	Grabber = FindComponentByClass<UGrabber>();
 }
 
 // Called every frame
 void ACharacter_Player::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	FOVTimeline.TickTimeline(DeltaTime);
 }
 
 // Bind functionality to input
@@ -101,7 +117,7 @@ void ACharacter_Player::Aim()
 {
 	IsAiming = true;
 	ACharacter_Base::SetSpeed(AimSpeed);
-	Camera->SetFieldOfView(AimFOV);
+	FOVTimeline.Play();
 }
 
 // Stop aiming
@@ -109,7 +125,7 @@ void ACharacter_Player::ResetAim()
 {
 	IsAiming = false;
 	ACharacter_Base::SetSpeed(MaxSpeed);
-	Camera->SetFieldOfView(FOV);
+	FOVTimeline.Reverse();
 }
 
 // Fire weapon
@@ -125,4 +141,9 @@ void ACharacter_Player::Interact()
 	{
 		Grabber->Interact();
 	}
+}
+
+void ACharacter_Player::TimelineFloatReturn(float Value) 
+{
+	Camera->SetFieldOfView(FMath::Lerp(FOV, AimFOV, Value));
 }

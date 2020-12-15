@@ -1,11 +1,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Components/TimelineComponent.h"
 #include "Character_Base.h"
 #include "Character_Player.generated.h"
 
 class USpringArmComponent;
 class UCameraComponent;
+class UTimelineComponent;
+class UCurveFloat;
 class AFirearm;
 class UGrabber;
 
@@ -15,12 +18,16 @@ class CYBERSHOOTER_API ACharacter_Player : public ACharacter_Base
 	GENERATED_BODY()
 
 public:
+	// CONSTRUCTOR
 	ACharacter_Player();
 
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	virtual void SetupPlayerInputComponent(class UInputComponent *PlayerInputComponent) override;
+
+	UFUNCTION()
+	void TimelineFloatReturn(float Value);
 
 protected:
 	// Called when the game starts or when spawned
@@ -29,24 +36,35 @@ protected:
 private:
 	// COMPONENTS
 	UPROPERTY(VisibleAnywhere, BluePrintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
-	USpringArmComponent *SpringArm = nullptr;
+	USpringArmComponent *SpringArm;
 
 	UPROPERTY(VisibleAnywhere, BluePrintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
-	UCameraComponent *Camera = nullptr;
+	UCameraComponent *Camera;
+
+	UPROPERTY(VisibleAnywhere, BluePrintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
+	UGrabber *Grabber;
+
+	UPROPERTY(VisibleAnywhere, Category = "Timelines", meta = (AllowPrivateAccess = "true"))
+	FTimeline FOVTimeline;
+
+	UPROPERTY(EditAnywhere, BluePrintReadWrite, Category = "Timelines", meta = (AllowPrivateAccess = "true"))
+	UCurveFloat *fCurve;
 
 	// VARIABLES
 	UPROPERTY(EditDefaultsOnly, Category = "Weapon", meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<AFirearm> FirearmClass;
 
+	UPROPERTY()
 	AFirearm *Firearm;
 
-	UGrabber *Grabber;
+	UPROPERTY(VisibleAnywhere, Category = "Camera", meta = (AllowPrivateAccess = "true"))
+	float FOV;
 
-	UPROPERTY(EditAnywhere, BluePrintReadWrite, Category = "Camera", meta = (AllowPrivateAccess = "true"))
-	float FOV = 90.f;
+	UPROPERTY(VisibleAnywhere, Category = "Camera", meta = (AllowPrivateAccess = "true"))
+	float AimFOV;
 
-	UPROPERTY(EditAnywhere, BluePrintReadWrite, Category = "Camera", meta = (AllowPrivateAccess = "true"))
-	float AimFOV = 50.f;
+	UPROPERTY(EditAnywhere, Category = "Timelines", meta = (AllowPrivateAccess = "true"))
+	float FOVOffset = 40.f;
 
 	UPROPERTY(EditAnywhere, BluePrintReadWrite, Category = "Movement", meta = (AllowPrivateAccess = "true"))
 	float AimSpeed = 300.f;
@@ -71,6 +89,6 @@ private:
 	void ResetAim();
 
 	void Fire();
-	
+
 	void Interact();
 };
