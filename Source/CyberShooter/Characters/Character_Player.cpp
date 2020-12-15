@@ -9,6 +9,7 @@
 #include "GameFramework/PlayerController.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Math/Vector.h"
 
 // Set default values
 ACharacter_Player::ACharacter_Player()
@@ -31,17 +32,11 @@ void ACharacter_Player::BeginPlay()
 
 	if (fCurve)
 	{
-		// Bind timeline delegate and add float track
-		FOnTimelineFloat TimelineProgress;
-		TimelineProgress.BindUFunction(this, FName("TimelineFloatReturn"));
-		FOVTimeline.AddInterpFloat(fCurve, TimelineProgress);
-
-		// Setting FOVs
-		FOV = Camera->FieldOfView;
-		AimFOV = FOV - FOVOffset;
-
-		// Setting timeline's settings before start
-		FOVTimeline.SetLooping(false);
+		SetupTimeline();
+	}
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("No float curve on %s"), *GetOwner()->GetName());
 	}
 
 
@@ -62,6 +57,11 @@ void ACharacter_Player::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	FOVTimeline.TickTimeline(DeltaTime);
+
+	if (IsAiming && GetVelocity().Size() > 0)
+	{
+		RotateActorToView();
+	}
 }
 
 // Bind functionality to input
@@ -87,55 +87,14 @@ void ACharacter_Player::SetupPlayerInputComponent(UInputComponent *PlayerInputCo
 	PlayerInputComponent->BindAction("Attack", IE_Pressed, this, &ACharacter_Player::Fire);
 }
 
-// Move forward
-void ACharacter_Player::MoveForward(float AxisValue)
-{
-	FVector Direction = UKismetMathLibrary::GetForwardVector(FRotator(0.0f, GetControlRotation().Yaw, 0.0f));
-	AddMovementInput(Direction, AxisValue);
-}
-
-// Move right
-void ACharacter_Player::MoveRight(float AxisValue)
-{
-	FVector Direction = UKismetMathLibrary::GetRightVector(FRotator(0.0f, GetControlRotation().Yaw, 0.0f));
-	AddMovementInput(Direction, AxisValue);
-}
-
-// Look up gamepad
-void ACharacter_Player::LookUp(float AxisValue)
-{
-	AddControllerPitchInput(RotationRate * AxisValue * GetWorld()->GetDeltaSeconds());
-}
-
-// Look right gamepad
-void ACharacter_Player::LookRight(float AxisValue)
-{
-	AddControllerYawInput(RotationRate * AxisValue * GetWorld()->GetDeltaSeconds());
-}
-
 // Aim weapon
 void ACharacter_Player::Aim()
 {
 	IsAiming = true;
 	ACharacter_Base::SetSpeed(AimSpeed);
 	FOVTimeline.Play();
-
-	// Get playercamera location and rotation
-	AController *PlayerController = GetController();
-	FVector PlayerViewLocation;
-	FRotator PlayerViewRotation;
-	PlayerController->GetPlayerViewPoint(OUT PlayerViewLocation, OUT PlayerViewRotation);
-
-	SetActorRotation(PlayerViewRotation);
 }
 
-// Stop aiming
-void ACharacter_Player::ResetAim()
-{
-	IsAiming = false;
-	ACharacter_Base::SetSpeed(MaxSpeed);
-	FOVTimeline.Reverse();
-}
 
 // Fire weapon
 void ACharacter_Player::Fire()
@@ -150,6 +109,68 @@ void ACharacter_Player::Interact()
 	{
 		Grabber->Interact();
 	}
+}
+
+// Look right gamepad
+void ACharacter_Player::LookRight(float AxisValue)
+{
+	AddControllerYawInput(RotationRate * AxisValue * GetWorld()->GetDeltaSeconds());
+}
+
+// Look up gamepad
+void ACharacter_Player::LookUp(float AxisValue)
+{
+	AddControllerPitchInput(RotationRate * AxisValue * GetWorld()->GetDeltaSeconds());
+}
+
+// Move forward
+void ACharacter_Player::MoveForward(float AxisValue)
+{
+	FVector Direction = UKismetMathLibrary::GetForwardVector(FRotator(0.0f, GetControlRotation().Yaw, 0.0f));
+	AddMovementInput(Direction, AxisValue);
+}
+
+// Move right
+void ACharacter_Player::MoveRight(float AxisValue)
+{
+	FVector Direction = UKismetMathLibrary::GetRightVector(FRotator(0.0f, GetControlRotation().Yaw, 0.0f));
+	AddMovementInput(Direction, AxisValue);
+}
+
+// Stop aiming
+void ACharacter_Player::ResetAim()
+{
+	IsAiming = false;
+	ACharacter_Base::SetSpeed(MaxSpeed);
+	FOVTimeline.Reverse();
+}
+
+void ACharacter_Player::RotateActorToView() 
+{
+	// Get playercamera location and rotation
+	AController *PlayerController = GetController();
+	FVector PlayerViewLocation;
+	FRotator PlayerViewRotation;
+	PlayerController->GetPlayerViewPoint(OUT PlayerViewLocation, OUT PlayerViewRotation);
+
+
+	// TODO - Slerp it
+
+	SetActorRotation(PlayerViewRotation);
+}
+
+void ACharacter_Player::SetupTimeline() 
+{
+		// Bind timeline delegate and add float track
+		TimelineProgress.BindUFunction(this, FName("TimelineFloatReturn"));
+		FOVTimeline.AddInterpFloat(fCurve, TimelineProgress);
+
+		// Setting FOVs
+		FOV = Camera->FieldOfView;
+		AimFOV = FOV - FOVOffset;
+
+		// Setting timeline's settings before start
+		FOVTimeline.SetLooping(false);
 }
 
 void ACharacter_Player::TimelineFloatReturn(float Value) 

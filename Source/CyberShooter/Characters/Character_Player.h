@@ -66,6 +66,9 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Timelines", meta = (AllowPrivateAccess = "true"))
 	float FOVOffset = 40.f;
 
+	UPROPERTY(VisibleAnywhere, Category = "Timelines", meta = (AllowPrivateAccess = "true"))
+	FOnTimelineFloat TimelineProgress;
+
 	UPROPERTY(EditAnywhere, BluePrintReadWrite, Category = "Movement", meta = (AllowPrivateAccess = "true"))
 	float AimSpeed = 300.f;
 
@@ -76,19 +79,23 @@ private:
 	bool IsAiming = false;
 
 	// FUNCTIONS
-	void MoveForward(float AxisValue);
-
-	void MoveRight(float AxisValue);
-
-	void LookUp(float AxisValue);
-
-	void LookRight(float AxisValue);
-
 	void Aim();
-
-	void ResetAim();
 
 	void Fire();
 
 	void Interact();
+
+	void LookRight(float AxisValue);
+
+	void LookUp(float AxisValue);
+
+	void MoveForward(float AxisValue);
+
+	void MoveRight(float AxisValue);
+
+	void ResetAim();
+
+	void RotateActorToView();
+
+	void SetupTimeline();
 };
