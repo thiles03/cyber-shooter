@@ -13,6 +13,7 @@ void AController_EnemyAI::BeginPlay()
         RunBehaviorTree(AIBehaviorTree);
 
         GetBlackboardComponent()->SetValueAsVector(TEXT("PlayerLocation"), PlayerPawn->GetActorLocation());
+        GetBlackboardComponent()->SetValueAsVector(TEXT("StartLocation"), GetPawn()->GetActorLocation());
     }
 }
 

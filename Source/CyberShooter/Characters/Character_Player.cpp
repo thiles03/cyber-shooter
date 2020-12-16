@@ -3,7 +3,6 @@
 #include "Components/InputComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/TimelineComponent.h"
-#include "Curves/CurveFloat.h"
 #include "CyberShooter/Actors/Firearm.h"
 #include "CyberShooter/Components/Grabber.h"
 #include "GameFramework/PlayerController.h"
@@ -82,8 +81,8 @@ void ACharacter_Player::SetupPlayerInputComponent(UInputComponent *PlayerInputCo
 
 	// Combat
 	PlayerInputComponent->BindAction("Aim", IE_Pressed, this, &ACharacter_Player::Aim);
-	PlayerInputComponent->BindAction("Aim", IE_Released, this, &ACharacter_Player::ResetAim);
-	PlayerInputComponent->BindAction("Attack", IE_Pressed, this, &ACharacter_Player::Fire);
+	PlayerInputComponent->BindAction("Aim", IE_Released, this, &ACharacter_Player::AimReset);
+	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &ACharacter_Player::Fire);
 }
 
 // Aim weapon
@@ -94,11 +93,23 @@ void ACharacter_Player::Aim()
 	FOVTimeline.Play();
 }
 
+// Stop aiming
+void ACharacter_Player::AimReset()
+{
+	IsAiming = false;
+	ACharacter_Base::SetSpeed(MaxSpeed);
+	FOVTimeline.Reverse();
+}
 
 // Fire weapon
 void ACharacter_Player::Fire()
 {
+	IsAttacking = true;
 	Firearm->Fire();
+
+	// TODO - Delay
+	FTimerHandle Timer;
+	GetWorld()->GetTimerManager().SetTimer(Timer, this, {IsAttacking = false} , 0.5f, false);
 }
 
 // Interact
@@ -136,14 +147,6 @@ void ACharacter_Player::MoveRight(float AxisValue)
 	AddMovementInput(Direction, AxisValue);
 }
 
-// Stop aiming
-void ACharacter_Player::ResetAim()
-{
-	IsAiming = false;
-	ACharacter_Base::SetSpeed(MaxSpeed);
-	FOVTimeline.Reverse();
-}
-
 void ACharacter_Player::RotateActorToView() 
 {
 	AController *PlayerController = GetController();
@@ -154,9 +157,9 @@ void ACharacter_Player::RotateActorToView()
 	PlayerController->GetPlayerViewPoint(OUT PlayerViewLocation, OUT PlayerViewRotation);
 
 	// Rotate player to face camera direction
-	float TargetYaw = FMath::Lerp (GetActorRotation().Yaw, PlayerViewRotation.Yaw, 0.2f);
-	FRotator TargetRotation = FRotator(GetActorRotation().Roll, TargetYaw, GetActorRotation().Pitch);
-	SetActorRotation(TargetRotation.Quaternion());
+	FRotator TargetRotation = FRotator(GetActorRotation().Roll, PlayerViewRotation.Yaw, GetActorRotation().Pitch);
+	FRotator InterpRotation = FMath::RInterpTo(GetActorRotation(), TargetRotation, FApp::GetDeltaTime(), 20);
+	SetActorRotation(InterpRotation);
 }
 
 void ACharacter_Player::SetupTimeline() 

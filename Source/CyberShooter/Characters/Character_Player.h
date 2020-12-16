@@ -69,17 +69,22 @@ private:
 	UPROPERTY(VisibleAnywhere, Category = "Timelines", meta = (AllowPrivateAccess = "true"))
 	FOnTimelineFloat TimelineProgress;
 
-	UPROPERTY(EditAnywhere, BluePrintReadWrite, Category = "Movement", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere, Category = "Movement", meta = (AllowPrivateAccess = "true"))
 	float AimSpeed = 300.f;
 
-	UPROPERTY(EditAnywhere, BluePrintReadWrite, Category = "Movement", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere, Category = "Movement", meta = (AllowPrivateAccess = "true"))
 	float RotationRate = 50.f;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon", meta = (AllowPrivateAccess = "true"))
 	bool IsAiming = false;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon", meta = (AllowPrivateAccess = "true"))
+	bool IsAttacking = false;
+
 	// FUNCTIONS
 	void Aim();
+
+	void AimReset();
 
 	void Fire();
 
@@ -92,8 +97,6 @@ private:
 	void MoveForward(float AxisValue);
 
 	void MoveRight(float AxisValue);
-
-	void ResetAim();
 
 	void RotateActorToView();
 
