@@ -8,5 +8,11 @@ UCLASS()
 class CYBERSHOOTER_API UBTTask_ClearBlackboardValue : public UBTTask_BlackboardBase
 {
 	GENERATED_BODY()
+
+public:
+	UBTTask_ClearBlackboardValue();
+
+protected:
+	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory);
 	
 };
