@@ -1,9 +1,0 @@
-{
-	"files.exclude": {
-		"D:/Unreal/Projects/CyberShooter/.git": true,
-		"D:/Unreal/Projects/CyberShooter/.vscode": true,
-		"D:/Unreal/Projects/CyberShooter/Content": true,
-		"D:/Unreal/Projects/CyberShooter/Intermediate": true,
-		"D:/Unreal/Projects/CyberShooter/Saved": true
-	}
-}

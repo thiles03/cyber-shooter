@@ -82,7 +82,7 @@ void ACharacter_Player::SetupPlayerInputComponent(UInputComponent *PlayerInputCo
 	// Combat
 	PlayerInputComponent->BindAction("Aim", IE_Pressed, this, &ACharacter_Player::Aim);
 	PlayerInputComponent->BindAction("Aim", IE_Released, this, &ACharacter_Player::AimReset);
-	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &ACharacter_Player::Fire);
+	PlayerInputComponent->BindAction("Attack", IE_Pressed, this, &ACharacter_Player::Attack);
 }
 
 // Aim weapon
@@ -102,14 +102,10 @@ void ACharacter_Player::AimReset()
 }
 
 // Fire weapon
-void ACharacter_Player::Fire()
+void ACharacter_Player::Attack()
 {
 	IsAttacking = true;
 	Firearm->Fire();
-
-	// TODO - Delay
-	FTimerHandle Timer;
-	GetWorld()->GetTimerManager().SetTimer(Timer, this, {IsAttacking = false} , 0.5f, false);
 }
 
 // Interact

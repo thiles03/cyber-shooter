@@ -86,7 +86,7 @@ private:
 
 	void AimReset();
 
-	void Fire();
+	void Attack();
 
 	void Interact();
 
