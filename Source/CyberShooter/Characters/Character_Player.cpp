@@ -36,18 +36,6 @@ void ACharacter_Player::BeginPlay()
 	{
 		UE_LOG(LogTemp, Error, TEXT("No float curve on %s"), *GetOwner()->GetName());
 	}
-
-
-	// TODO - WEAPON CHANGE FUNCTIONALITY
-
-	// Hide default pistol
-	GetMesh()->HideBoneByName(TEXT("pistol"), EPhysBodyOp::PBO_None);
-
-	// Spawn selected firearm class in the world
-	Firearm = GetWorld()->SpawnActor<AFirearm>(FirearmClass);
-	// Attach firearm to character mesh
-	Firearm->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("WeaponSocketRight"));
-	Firearm->SetOwner(this);
 }
 
 // Called every frame
@@ -56,7 +44,7 @@ void ACharacter_Player::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	FOVTimeline.TickTimeline(DeltaTime);
 
-	if (IsAiming && GetVelocity().Size() > 0)
+	if (IsAiming && GetVelocity().Size() > 0 || IsAttacking)
 	{
 		RotateActorToView();
 	}
@@ -83,6 +71,8 @@ void ACharacter_Player::SetupPlayerInputComponent(UInputComponent *PlayerInputCo
 	PlayerInputComponent->BindAction("Aim", IE_Pressed, this, &ACharacter_Player::Aim);
 	PlayerInputComponent->BindAction("Aim", IE_Released, this, &ACharacter_Player::AimReset);
 	PlayerInputComponent->BindAction("Attack", IE_Pressed, this, &ACharacter_Player::Attack);
+	PlayerInputComponent->BindAction("Weapon1", IE_Pressed, this, &ACharacter_Player::WeaponOne);
+	PlayerInputComponent->BindAction("Weapon2", IE_Pressed, this, &ACharacter_Player::WeaponTwo);
 }
 
 // Aim weapon
@@ -104,8 +94,17 @@ void ACharacter_Player::AimReset()
 // Fire weapon
 void ACharacter_Player::Attack()
 {
-	IsAttacking = true;
-	Firearm->Fire();
+	if (Firearm && !IsAttacking)
+	{
+		IsAttacking = true;
+		Firearm->Fire();
+	}
+}
+
+// Stop firing
+void ACharacter_Player::AttackStop()
+{
+	IsAttacking = false;
 }
 
 // Interact
@@ -143,6 +142,7 @@ void ACharacter_Player::MoveRight(float AxisValue)
 	AddMovementInput(Direction, AxisValue);
 }
 
+// Rotate player to face camera direction
 void ACharacter_Player::RotateActorToView() 
 {
 	AController *PlayerController = GetController();
@@ -154,10 +154,11 @@ void ACharacter_Player::RotateActorToView()
 
 	// Rotate player to face camera direction
 	FRotator TargetRotation = FRotator(GetActorRotation().Roll, PlayerViewRotation.Yaw, GetActorRotation().Pitch);
-	FRotator InterpRotation = FMath::RInterpTo(GetActorRotation(), TargetRotation, FApp::GetDeltaTime(), 20);
+	FRotator InterpRotation = FMath::RInterpTo(GetActorRotation(), TargetRotation, FApp::GetDeltaTime(), RotateActorInterp);
 	SetActorRotation(InterpRotation);
 }
 
+// Timeline for aiming zoom
 void ACharacter_Player::SetupTimeline() 
 {
 		// Bind timeline delegate and add float track
@@ -172,8 +173,28 @@ void ACharacter_Player::SetupTimeline()
 		FOVTimeline.SetLooping(false);
 }
 
+// FOV Timeline
 void ACharacter_Player::TimelineFloatReturn(float Value) 
 {
 	Camera->SetFieldOfView(FMath::Lerp(FOV, AimFOV, Value));
+}
+
+// Default pistol
+void ACharacter_Player::WeaponOne() 
+{
+	// TODO
+}
+
+// Secondary pistol
+void ACharacter_Player::WeaponTwo() 
+{
+	// Hide default pistol
+	GetMesh()->HideBoneByName(TEXT("pistol"), EPhysBodyOp::PBO_None);
+
+	// Spawn selected firearm class in the world
+	Firearm = GetWorld()->SpawnActor<AFirearm>(FirearmClass);
+	// Attach firearm to character mesh
+	Firearm->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("WeaponSocketRight"));
+	Firearm->SetOwner(this);
 }
 

@@ -75,6 +75,9 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Movement", meta = (AllowPrivateAccess = "true"))
 	float RotationRate = 50.f;
 
+	UPROPERTY(EditAnywhere, Category = "Movement", meta = (AllowPrivateAccess = "true"))
+	float RotateActorInterp = 25.f;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon", meta = (AllowPrivateAccess = "true"))
 	bool IsAiming = false;
 
@@ -87,6 +90,9 @@ private:
 	void AimReset();
 
 	void Attack();
+
+	UFUNCTION(BlueprintCallable)
+	void AttackStop();
 
 	void Interact();
 
@@ -101,4 +107,8 @@ private:
 	void RotateActorToView();
 
 	void SetupTimeline();
+
+	void WeaponOne();
+
+	void WeaponTwo();
 };
