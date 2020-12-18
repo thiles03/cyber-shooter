@@ -1,5 +1,6 @@
 #include "Combat.h"
 #include "CyberShooter/Characters/Character_Base.h"
+#include "Kismet/GameplayStatics.h"
 
 // Constructor
 UCombat::UCombat()
@@ -19,7 +20,7 @@ void UCombat::Attack()
 {
 	UE_LOG(LogTemp, Warning, TEXT("%s attacking"), *GetOwner()->GetName());
 
-	if (GetOwner())
+	if (Character->CombatType == ECombatType::RANGED)
 	{
 		// Spawn particle effects
 		// Trace bullet
