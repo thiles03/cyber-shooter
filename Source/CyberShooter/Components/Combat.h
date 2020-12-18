@@ -4,6 +4,7 @@
 #include "Components/ActorComponent.h"
 #include "Combat.generated.h"
 
+class ACharacter_Base;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class CYBERSHOOTER_API UCombat : public UActorComponent
@@ -21,6 +22,10 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
+	// VARIABLES
+	UPROPERTY()
+	ACharacter_Base *Character;
 
+	//FUNCTIONS
 		
 };

@@ -1,4 +1,5 @@
-#include "CyberShooter/Components/Combat.h"
+#include "Combat.h"
+#include "CyberShooter/Characters/Character_Base.h"
 
 // Constructor
 UCombat::UCombat()
@@ -10,17 +11,21 @@ UCombat::UCombat()
 void UCombat::BeginPlay()
 {
 	Super::BeginPlay();
+
+	Character = Cast<ACharacter_Base>(GetOwner());
 }
 
 void UCombat::Attack() 
 {
 	UE_LOG(LogTemp, Warning, TEXT("%s attacking"), *GetOwner()->GetName());
 
-	// If ranged
+	if (GetOwner())
+	{
 		// Spawn particle effects
 		// Trace bullet
 		// If player hit
 			// Deal damage
+	}
 
 	// If melee and within attack range
 		// Spawn particle effects

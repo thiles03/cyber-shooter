@@ -4,6 +4,13 @@
 #include "GameFramework/Character.h"
 #include "Character_Base.generated.h"
 
+UENUM()
+enum class ECombatType : uint8
+{
+	MELEE,
+	RANGED
+};
+
 class UCombat;
 
 UCLASS()
@@ -19,6 +26,11 @@ public:
 	UPROPERTY(VisibleAnywhere, BluePrintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	UCombat *CombatHandler;
 
+	// VARIABLES
+	UPROPERTY(EditDefaultsOnly)
+	ECombatType CombatType;
+
+	// FUNCTIONS
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
