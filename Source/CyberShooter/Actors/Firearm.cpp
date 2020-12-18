@@ -18,7 +18,7 @@ AFirearm::AFirearm()
 // Spawn particle FX and handle weapon firing
 void AFirearm::Fire()
 {
-	UGameplayStatics::SpawnEmitterAttached(MuzzleFlash, Mesh, TEXT("MuzzleSocket")); // Spawn VFX
+	UGameplayStatics::SpawnEmitterAttached(MuzzleFlash, Mesh, TEXT("MuzzleSocket")); // Spawn muzzle VFX
 
 	// Get the player controller
 	APawn *PlayerPawn = Cast<APawn>(GetOwner());

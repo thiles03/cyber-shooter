@@ -26,6 +26,12 @@ private:
 	UPROPERTY()
 	ACharacter_Base *Character;
 
+	UPROPERTY(EditAnywhere)
+	UParticleSystem *MuzzleFlash;
+
+	UPROPERTY(EditAnywhere)
+	UParticleSystem *ImpactEffect;
+
 	//FUNCTIONS
 		
 };

@@ -18,18 +18,21 @@ void UCombat::BeginPlay()
 
 void UCombat::Attack() 
 {
-	UE_LOG(LogTemp, Warning, TEXT("%s attacking"), *GetOwner()->GetName());
+	
 
 	if (Character->CombatType == ECombatType::RANGED)
 	{
-		// Spawn particle effects
+		UGameplayStatics::SpawnEmitterAttached(MuzzleFlash, Character->GetMesh(), TEXT("MuzzleSocket_Primary")); // Spawn muzzle VFX
 		// Trace bullet
 		// If player hit
 			// Deal damage
 	}
 
-	// If melee and within attack range
+	if (Character->CombatType == ECombatType::MELEE)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("%s attacking"), *GetOwner()->GetName());
 		// Spawn particle effects
 		// Deal damage
+	}
 }
 
