@@ -14,9 +14,6 @@ public:
 	// Sets default values for this component's properties
 	UCombat();
 
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
 	void Attack();
 
 protected:

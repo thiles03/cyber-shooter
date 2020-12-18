@@ -1,10 +1,13 @@
 #include "Character_Base.h"
+#include "CyberShooter/Components/Combat.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
 ACharacter_Base::ACharacter_Base()
 {
 	PrimaryActorTick.bCanEverTick = true;
+
+	CombatHandler = CreateDefaultSubobject<UCombat>(TEXT("Combat Handler"));
 }
 
 // Called when the game starts or when spawned

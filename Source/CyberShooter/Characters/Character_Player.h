@@ -7,7 +7,6 @@
 
 class USpringArmComponent;
 class UCameraComponent;
-class UTimelineComponent;
 class UCurveFloat;
 class AFirearm;
 class UGrabber;

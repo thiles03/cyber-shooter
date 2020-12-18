@@ -4,7 +4,6 @@
 #include "CyberShooter/Characters/Character_Base.h"
 #include "Character_Enemy.generated.h"
 
-class UCombat;
 
 UCLASS()
 class CYBERSHOOTER_API ACharacter_Enemy : public ACharacter_Base
@@ -19,8 +18,6 @@ protected:
 
 private:
 	// COMPONENTS
-	UPROPERTY(VisibleAnywhere, BluePrintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
-	UCombat *CombatHandler;
 
 	//VARIABLES
 

@@ -12,14 +12,7 @@ class CYBERSHOOTER_API AFirearm : public AActor
 public:
 	AFirearm();
 
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
 	void Fire();
-
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
 
 private:
 	//COMPONENTS

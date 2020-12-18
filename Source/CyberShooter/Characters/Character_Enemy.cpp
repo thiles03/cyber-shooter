@@ -5,6 +5,4 @@
 ACharacter_Enemy::ACharacter_Enemy() 
 {
     PrimaryActorTick.bCanEverTick = true;
-
-    CombatHandler = CreateDefaultSubobject<UCombat>(TEXT("Combat Handler"));
 }

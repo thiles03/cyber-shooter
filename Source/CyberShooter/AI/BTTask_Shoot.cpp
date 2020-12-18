@@ -1,5 +1,7 @@
 #include "CyberShooter/AI/BTTask_Shoot.h"
-
+#include "AIController.h"
+#include "CyberShooter/Characters/Character_Base.h"
+#include "CyberShooter/Components/Combat.h"
 
 UBTTask_Shoot::UBTTask_Shoot() 
 {
@@ -10,7 +12,19 @@ EBTNodeResult::Type UBTTask_Shoot::ExecuteTask(UBehaviorTreeComponent& OwnerComp
 {
     Super::ExecuteTask(OwnerComp, NodeMemory);
 
-    OwnerComp.GetAIOwner();
+    if(OwnerComp.GetAIOwner() == nullptr)
+    {
+        return EBTNodeResult::Failed;
+    }
+
+    ACharacter_Base *Character = Cast<ACharacter_Base>(OwnerComp.GetAIOwner()->GetPawn());
+
+    if(Character == nullptr)
+    {
+        return EBTNodeResult::Failed;
+    }
+
+    Character->CombatHandler->Attack();
 
     return EBTNodeResult::Succeeded;
 }

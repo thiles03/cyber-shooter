@@ -4,13 +4,20 @@
 #include "GameFramework/Character.h"
 #include "Character_Base.generated.h"
 
+class UCombat;
+
 UCLASS()
 class CYBERSHOOTER_API ACharacter_Base : public ACharacter
 {
 	GENERATED_BODY()
 
 public:
+	// CONSTRUCTOR
 	ACharacter_Base();
+
+	// COMPONENTS
+	UPROPERTY(VisibleAnywhere, BluePrintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
+	UCombat *CombatHandler;
 
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -22,6 +29,12 @@ public:
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
 
 protected:
+	// VARIABLES
+	UPROPERTY(EditDefaultsOnly, Category = "Stats", meta = (AllowPrivateAccess = "true"))
+	float MaxHealth = 100.f;
+
+	UPROPERTY(VisibleAnywhere, Category = "Stats")
+	float CurrentHealth;
 	UPROPERTY(VisibleAnywhere, Category = "Stats")
 	float MaxSpeed = 600.f;
 
@@ -32,12 +45,6 @@ protected:
 
 private:
 	// VARIABLES
-	UPROPERTY(EditDefaultsOnly, Category = "Stats", meta = (AllowPrivateAccess = "true"))
-	float MaxHealth = 100.f;
-
-	UPROPERTY(VisibleAnywhere, Category = "Stats")
-	float CurrentHealth;
-
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Stats", meta = (AllowPrivateAccess = "true"))
 	bool IsDead = false;
 
