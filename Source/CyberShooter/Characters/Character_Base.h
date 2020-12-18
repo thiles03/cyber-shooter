@@ -8,7 +8,8 @@ UENUM()
 enum class ECombatType : uint8
 {
 	MELEE,
-	RANGED
+	RANGED,
+	PLAYER
 };
 
 class UCombat;

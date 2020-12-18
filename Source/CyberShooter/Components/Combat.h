@@ -12,10 +12,13 @@ class CYBERSHOOTER_API UCombat : public UActorComponent
 	GENERATED_BODY()
 
 public:	
-	// Sets default values for this component's properties
+	// CONSTRUCTOR
 	UCombat();
 
+	// FUNCTIONS
 	void Attack();
+
+	float GetAttackRange();
 
 protected:
 	// Called when the game starts
@@ -32,6 +35,13 @@ private:
 	UPROPERTY(EditAnywhere)
 	UParticleSystem *ImpactEffect;
 
+	UPROPERTY(EditAnywhere)
+	float AttackRange = 200.f;
+
+	UPROPERTY()
+	float Damage = 20.f;
+
 	//FUNCTIONS
+
 		
 };

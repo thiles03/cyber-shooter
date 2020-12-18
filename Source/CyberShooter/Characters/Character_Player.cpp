@@ -182,12 +182,14 @@ void ACharacter_Player::TimelineFloatReturn(float Value)
 // Default pistol
 void ACharacter_Player::WeaponOne() 
 {
-	// TODO
+	CombatType = ECombatType::RANGED;
 }
 
 // Secondary pistol
 void ACharacter_Player::WeaponTwo() 
 {
+	CombatType = ECombatType::PLAYER;
+	
 	// Hide default pistol
 	GetMesh()->HideBoneByName(TEXT("pistol"), EPhysBodyOp::PBO_None);
 
