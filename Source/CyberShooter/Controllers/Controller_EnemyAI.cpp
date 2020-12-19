@@ -6,9 +6,7 @@ void AController_EnemyAI::BeginPlay()
 {
     Super::BeginPlay();
 
-    PlayerPawn = UGameplayStatics::GetPlayerPawn(this, 0);
-
-    if (AIBehaviorTree != nullptr)
+    if (AIBehaviorTree)
     {
         RunBehaviorTree(AIBehaviorTree);
 
@@ -19,14 +17,4 @@ void AController_EnemyAI::BeginPlay()
 void AController_EnemyAI::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);
-
-    if (LineOfSightTo(PlayerPawn))
-    {
-        GetBlackboardComponent()->SetValueAsVector(TEXT("PlayerLocation"), PlayerPawn->GetActorLocation());
-        GetBlackboardComponent()->SetValueAsVector(TEXT("LastKnownLocation"), PlayerPawn->GetActorLocation());
-    }
-    else
-    {
-        GetBlackboardComponent()->ClearValue("PlayerLocation");
-    }
 }
