@@ -23,7 +23,7 @@ void AController_EnemyAI::Tick(float DeltaTime)
     if (LineOfSightTo(PlayerPawn))
     {
         GetBlackboardComponent()->SetValueAsVector(TEXT("PlayerLocation"), PlayerPawn->GetActorLocation());
-        GetBlackboardComponent()->SetValueAsVector(TEXT("LastKnownLocation"), GetPawn()->GetActorLocation());
+        GetBlackboardComponent()->SetValueAsVector(TEXT("LastKnownLocation"), PlayerPawn->GetActorLocation());
     }
     else
     {

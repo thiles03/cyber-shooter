@@ -42,6 +42,7 @@ void ACharacter_Player::BeginPlay()
 void ACharacter_Player::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
 	FOVTimeline.TickTimeline(DeltaTime);
 
 	if (IsAiming && GetVelocity().Size() > 0 || IsAttacking)
@@ -183,13 +184,16 @@ void ACharacter_Player::TimelineFloatReturn(float Value)
 void ACharacter_Player::WeaponOne() 
 {
 	CombatType = ECombatType::RANGED;
+
+	// Show default pistol
+	GetMesh()->UnHideBoneByName(TEXT("pistol"));
 }
 
 // Secondary pistol
 void ACharacter_Player::WeaponTwo() 
 {
 	CombatType = ECombatType::PLAYER;
-	
+
 	// Hide default pistol
 	GetMesh()->HideBoneByName(TEXT("pistol"), EPhysBodyOp::PBO_None);
 
