@@ -5,11 +5,11 @@
 #include "Character_Base.h"
 #include "Character_Player.generated.h"
 
-class USpringArmComponent;
+class AFirearm;
 class UCameraComponent;
 class UCurveFloat;
-class AFirearm;
 class UGrabber;
+class USpringArmComponent;
 
 UCLASS()
 class CYBERSHOOTER_API ACharacter_Player : public ACharacter_Base
@@ -43,18 +43,21 @@ private:
 	UPROPERTY(VisibleAnywhere, BluePrintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	UGrabber *Grabber;
 
-	UPROPERTY(VisibleAnywhere, Category = "Timelines", meta = (AllowPrivateAccess = "true"))
-	FTimeline FOVTimeline;
-
 	UPROPERTY(EditAnywhere, BluePrintReadWrite, Category = "Timelines", meta = (AllowPrivateAccess = "true"))
 	UCurveFloat *fCurve;
 
 	// VARIABLES
-	UPROPERTY(EditDefaultsOnly, Category = "Weapon", meta = (AllowPrivateAccess = "true"))
-	TSubclassOf<AFirearm> FirearmClass;
-
 	UPROPERTY()
 	AFirearm *Firearm;
+	
+	UPROPERTY(VisibleAnywhere, Category = "Timelines", meta = (AllowPrivateAccess = "true"))
+	FTimeline FOVTimeline;
+
+	UPROPERTY(VisibleAnywhere, Category = "Timelines", meta = (AllowPrivateAccess = "true"))
+	FOnTimelineFloat TimelineProgress;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Weapon", meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<AFirearm> FirearmClass;
 
 	UPROPERTY(VisibleAnywhere, Category = "Camera", meta = (AllowPrivateAccess = "true"))
 	float FOV;
@@ -64,9 +67,6 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "Timelines", meta = (AllowPrivateAccess = "true"))
 	float FOVOffset = 40.f;
-
-	UPROPERTY(VisibleAnywhere, Category = "Timelines", meta = (AllowPrivateAccess = "true"))
-	FOnTimelineFloat TimelineProgress;
 
 	UPROPERTY(EditAnywhere, Category = "Movement", meta = (AllowPrivateAccess = "true"))
 	float AimSpeed = 300.f;

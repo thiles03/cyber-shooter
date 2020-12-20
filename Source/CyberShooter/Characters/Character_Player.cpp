@@ -1,9 +1,8 @@
 #include "Character_Player.h"
 #include "Camera/CameraComponent.h"
-#include "Components/InputComponent.h"
-#include "Components/SkeletalMeshComponent.h"
 #include "Components/TimelineComponent.h"
 #include "CyberShooter/Actors/Firearm.h"
+#include "CyberShooter/Components/Combat.h"
 #include "CyberShooter/Components/Grabber.h"
 #include "GameFramework/PlayerController.h"
 #include "GameFramework/SpringArmComponent.h"
@@ -95,10 +94,17 @@ void ACharacter_Player::AimReset()
 // Fire weapon
 void ACharacter_Player::Attack()
 {
-	if (Firearm && !IsAttacking)
+	IsAttacking = true;
+
+	if (CombatType == ECombatType::PLAYER)
 	{
-		IsAttacking = true;
+		if (!Firearm) {return;}
 		Firearm->Fire();
+	}
+
+	if (CombatType == ECombatType::RANGED)
+	{
+		CombatHandler->Attack();
 	}
 }
 
@@ -162,16 +168,16 @@ void ACharacter_Player::RotateActorToView()
 // Timeline for aiming zoom
 void ACharacter_Player::SetupTimeline() 
 {
-		// Bind timeline delegate and add float track
-		TimelineProgress.BindUFunction(this, FName("TimelineFloatReturn"));
-		FOVTimeline.AddInterpFloat(fCurve, TimelineProgress);
+	// Bind timeline delegate and add float track
+	TimelineProgress.BindUFunction(this, FName("TimelineFloatReturn"));
+	FOVTimeline.AddInterpFloat(fCurve, TimelineProgress);
 
-		// Setting FOVs
-		FOV = Camera->FieldOfView;
-		AimFOV = FOV - FOVOffset;
+	// Setting FOVs
+	FOV = Camera->FieldOfView;
+	AimFOV = FOV - FOVOffset;
 
-		// Setting timeline's settings before start
-		FOVTimeline.SetLooping(false);
+	// Setting timeline's settings before start
+	FOVTimeline.SetLooping(false);
 }
 
 // FOV Timeline
