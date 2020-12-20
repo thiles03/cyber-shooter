@@ -208,6 +208,12 @@ void ACharacter_Player::WeaponTwo()
 	// Hide default pistol
 	GetMesh()->HideBoneByName(TEXT("pistol"), EPhysBodyOp::PBO_None);
 
+	// Prevent duplicates
+	if (Firearm)
+	{
+		Firearm->Destroy();
+	}
+	
 	// Spawn selected firearm class in the world
 	Firearm = GetWorld()->SpawnActor<AFirearm>(FirearmClass);
 

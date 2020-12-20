@@ -1,4 +1,5 @@
 #include "Character_Base.h"
+#include "Components/CapsuleComponent.h"
 #include "CyberShooter/Components/Combat.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -50,6 +51,8 @@ float ACharacter_Base::TakeDamage(float DamageAmount, struct FDamageEvent const 
 void ACharacter_Base::Die()
 {
 	IsDead = true;
+	DetachFromControllerPendingDestroy();
+	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 }
 
 // Set move speed
