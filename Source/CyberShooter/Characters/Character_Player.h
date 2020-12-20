@@ -49,7 +49,7 @@ private:
 	// VARIABLES
 	UPROPERTY()
 	AFirearm *Firearm;
-	
+
 	UPROPERTY(VisibleAnywhere, Category = "Timelines", meta = (AllowPrivateAccess = "true"))
 	FTimeline FOVTimeline;
 

@@ -1,6 +1,5 @@
 #include "Character_Player.h"
 #include "Camera/CameraComponent.h"
-#include "Components/TimelineComponent.h"
 #include "CyberShooter/Actors/Firearm.h"
 #include "CyberShooter/Components/Combat.h"
 #include "CyberShooter/Components/Grabber.h"
@@ -111,7 +110,7 @@ void ACharacter_Player::Attack()
 // Stop firing
 void ACharacter_Player::AttackStop()
 {
-	IsAttacking = false;
+	IsAttacking = true;
 }
 
 // Interact
