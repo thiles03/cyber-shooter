@@ -48,24 +48,26 @@ void UCombat::Attack()
 		// Line trace from viewpoint and return hit
 		FVector TraceEnd = CharacterViewLocation + CharacterViewRotation.Vector() * AttackRange;
 		FHitResult Hit;
-		bool bSuccess = GetWorld()->LineTraceSingleByChannel(OUT Hit, CharacterViewLocation, TraceEnd, ECollisionChannel::ECC_GameTraceChannel1);
+		FCollisionQueryParams Params;
+		Params.AddIgnoredActor(GetOwner());
+		bool bSuccess = GetWorld()->LineTraceSingleByChannel(OUT Hit, CharacterViewLocation, TraceEnd, ECollisionChannel::ECC_GameTraceChannel1, Params);
 
 		// If Character hit
 		if (bSuccess)
 		{
-			FVector ShotOppositeDirection = -CharacterViewRotation.Vector();
+			FVector AttackOppositeDirection = -CharacterViewRotation.Vector();
 			
 			// Spawn impact VFX at hit location
 			if (ImpactEffect)
 			{
-				UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ImpactEffect, Hit.Location, ShotOppositeDirection.Rotation());
+				UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ImpactEffect, Hit.Location, AttackOppositeDirection.Rotation());
 			}
 
 			// Do damage to hit actor
 			AActor *HitActor = Hit.GetActor();
 			if (HitActor)
 			{
-				FPointDamageEvent DamageEvent(Damage, Hit, -ShotOppositeDirection, nullptr);
+				FPointDamageEvent DamageEvent(Damage, Hit, -AttackOppositeDirection, nullptr);
 				HitActor->TakeDamage(Damage, DamageEvent, CharacterController, GetOwner());
 			}
 		}
