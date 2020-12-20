@@ -27,10 +27,48 @@ void UCombat::Attack()
 
 	if (Character->CombatType == ECombatType::RANGED)
 	{
-		UGameplayStatics::SpawnEmitterAttached(MuzzleFlash, Character->GetMesh(), TEXT("MuzzleSocket_Primary")); // Spawn muzzle VFX
-		// Trace bullet
-		// If player hit
-			// Deal damage
+		// Spawn muzzle VFX
+		if (MuzzleFlash)
+		{
+			UGameplayStatics::SpawnEmitterAttached(MuzzleFlash, Character->GetMesh(), TEXT("MuzzleSocket_Primary"));
+		}
+		
+		// Get the character controller
+		APawn *CharacterPawn = Cast<APawn>(GetOwner());
+		if (!CharacterPawn) {return;}
+		AController *CharacterController = CharacterPawn->GetController();
+		if (!CharacterController) {return;}
+		
+		
+		// Get character view location and rotation
+		FVector CharacterViewLocation;
+		FRotator CharacterViewRotation;
+		CharacterController->GetPlayerViewPoint(OUT CharacterViewLocation, OUT CharacterViewRotation);
+
+		// Line trace from viewpoint and return hit
+		FVector TraceEnd = CharacterViewLocation + CharacterViewRotation.Vector() * AttackRange;
+		FHitResult Hit;
+		bool bSuccess = GetWorld()->LineTraceSingleByChannel(OUT Hit, CharacterViewLocation, TraceEnd, ECollisionChannel::ECC_GameTraceChannel1);
+
+		// If Character hit
+		if (bSuccess)
+		{
+			FVector ShotOppositeDirection = -CharacterViewRotation.Vector();
+			
+			// Spawn impact VFX at hit location
+			if (ImpactEffect)
+			{
+				UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ImpactEffect, Hit.Location, ShotOppositeDirection.Rotation());
+			}
+
+			// Do damage to hit actor
+			AActor *HitActor = Hit.GetActor();
+			if (HitActor)
+			{
+				FPointDamageEvent DamageEvent(Damage, Hit, -ShotOppositeDirection, nullptr);
+				HitActor->TakeDamage(Damage, DamageEvent, CharacterController, GetOwner());
+			}
+		}
 	}
 
 	if (Character->CombatType == ECombatType::MELEE)
