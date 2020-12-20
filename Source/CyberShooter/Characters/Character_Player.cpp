@@ -190,6 +190,12 @@ void ACharacter_Player::WeaponOne()
 {
 	CombatType = ECombatType::RANGED;
 
+	// Destroy held weapon
+	if (Firearm)
+	{
+		Firearm->Destroy();
+	}
+
 	// Show default pistol
 	GetMesh()->UnHideBoneByName(TEXT("pistol"));
 }
@@ -204,6 +210,7 @@ void ACharacter_Player::WeaponTwo()
 
 	// Spawn selected firearm class in the world
 	Firearm = GetWorld()->SpawnActor<AFirearm>(FirearmClass);
+
 	// Attach firearm to character mesh
 	Firearm->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("WeaponSocketRight"));
 	Firearm->SetOwner(this);
