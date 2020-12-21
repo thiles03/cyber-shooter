@@ -213,7 +213,7 @@ void ACharacter_Player::WeaponTwo()
 	{
 		Firearm->Destroy();
 	}
-	
+
 	// Spawn selected firearm class in the world
 	Firearm = GetWorld()->SpawnActor<AFirearm>(FirearmClass);
 
@@ -222,3 +222,4 @@ void ACharacter_Player::WeaponTwo()
 	Firearm->SetOwner(this);
 }
 
+// Bazooka

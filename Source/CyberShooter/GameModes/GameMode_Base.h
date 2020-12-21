@@ -8,4 +8,7 @@ UCLASS()
 class CYBERSHOOTER_API AGameMode_Base : public AGameModeBase
 {
 	GENERATED_BODY()
+
+public:
+	void PawnKilled(APawn *PawnKilled);
 };
