@@ -3,7 +3,7 @@
 #include "CyberShooter/Actors/Firearm.h"
 #include "CyberShooter/Components/Combat.h"
 #include "CyberShooter/Components/Grabber.h"
-#include "GameFramework/PlayerController.h"
+#include "CyberShooter/Controllers/Controller_Player.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Kismet/KismetMathLibrary.h"
 
@@ -113,12 +113,15 @@ void ACharacter_Player::AttackStop()
 	IsAttacking = true;
 }
 
+// Die
 void ACharacter_Player::Die() 
 {
 	Grabber->Release(); // Drop any held objects first
-	UE_LOG(LogTemp, Warning, TEXT("1"));
+
 	Super::Die();
-	UE_LOG(LogTemp, Warning, TEXT("3"));
+
+	// AController_Player *PlayerController = Cast<AController_Player>(GetController());
+	// PlayerController->SetPlayerEnabledState(false);
 }
 
 // Interact

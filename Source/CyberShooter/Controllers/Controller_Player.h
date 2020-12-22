@@ -12,6 +12,8 @@ class CYBERSHOOTER_API AController_Player : public APlayerController
 public:
 	virtual void GameHasEnded(class AActor* EndGameFocus = nullptr, bool bIsWinner = false) override;
 
+	void SetPlayerEnabledState(bool IsEnabled);
+
 private:
 	UPROPERTY(EditAnywhere)
 	float RestartDelay = 5.f;

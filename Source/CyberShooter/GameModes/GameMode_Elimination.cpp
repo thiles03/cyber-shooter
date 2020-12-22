@@ -9,6 +9,6 @@ void AGameMode_Elimination::PawnKilled(APawn *PawnKilled)
 
     if (PlayerController)
     {
-        PlayerController->GameHasEnded(nullptr, false);
+        PlayerController->GameHasEnded(PawnKilled, false);
     }
 }
