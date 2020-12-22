@@ -16,6 +16,7 @@ public:
 
 	void Interact();
 
+	void Release();
 protected:
 	virtual void BeginPlay() override;
 
@@ -36,7 +37,6 @@ private:
 	// FUNCTIONS
 	void Grab();
 
-	void Release();
 
 	void FindPhysicsHandle();
 

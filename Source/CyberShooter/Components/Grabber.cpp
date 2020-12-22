@@ -122,7 +122,7 @@ void UGrabber::Grab()
 // Release grabbed physics body
 void UGrabber::Release()
 {
-	if (!PhysicsHandle) {return;}
+	if (!PhysicsHandle || IsHolding == false) {return;}
 	PhysicsHandle->ReleaseComponent();
 	IsHolding = false;
 }

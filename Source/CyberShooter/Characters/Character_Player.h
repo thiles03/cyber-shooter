@@ -93,6 +93,8 @@ private:
 	UFUNCTION(BlueprintCallable)
 	void AttackStop();
 
+	virtual void Die() override;
+
 	void Interact();
 
 	void LookRight(float AxisValue);

@@ -113,6 +113,11 @@ void ACharacter_Player::AttackStop()
 	IsAttacking = true;
 }
 
+void ACharacter_Player::Die() 
+{
+	Super::Die();
+}
+
 // Interact
 void ACharacter_Player::Interact()
 {

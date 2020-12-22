@@ -56,11 +56,11 @@ protected:
 
 	void SetSpeed(float Speed);
 
+	// FUNCTIONS
+	virtual void Die();
+
 private:
 	// VARIABLES
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Stats", meta = (AllowPrivateAccess = "true"))
 	bool IsDead = false;
-
-	// FUNCTIONS
-	void Die();
 };

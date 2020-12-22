@@ -53,15 +53,18 @@ void ACharacter_Base::Die()
 {
 	IsDead = true;
 
+	// Disable collision
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
+	// Notify the game mode
 	AGameMode_Base *GameMode = GetWorld()->GetAuthGameMode<AGameMode_Base>();
 
 	if (GameMode)
 	{
 		GameMode->PawnKilled(this);
 	}
-	
+
+	// Detach from controller
 	DetachFromControllerPendingDestroy();
 }
 
