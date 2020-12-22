@@ -40,7 +40,7 @@ float ACharacter_Base::TakeDamage(float DamageAmount, struct FDamageEvent const 
 	DamageToApply = FMath::Min(CurrentHealth, DamageToApply);
 	CurrentHealth -= DamageToApply;
 
-	if (CurrentHealth <= 0)
+	if (CurrentHealth <= 0 && !IsDead)
 	{
 		Die();
 	}

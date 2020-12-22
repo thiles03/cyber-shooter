@@ -4,5 +4,10 @@ void AGameMode_Elimination::PawnKilled(APawn *PawnKilled)
 {
     Super::PawnKilled(PawnKilled);
 
-    UE_LOG(LogTemp, Warning, TEXT("pawn killed"));
+    APlayerController *PlayerController = Cast<APlayerController>(PawnKilled);
+
+    if (PlayerController)
+    {
+        PlayerController->GameHasEnded(nullptr, false);
+    }
 }
