@@ -52,13 +52,17 @@ float ACharacter_Base::TakeDamage(float DamageAmount, struct FDamageEvent const 
 void ACharacter_Base::Die()
 {
 	IsDead = true;
-	DetachFromControllerPendingDestroy();
+
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+
 	AGameMode_Base *GameMode = GetWorld()->GetAuthGameMode<AGameMode_Base>();
+
 	if (GameMode)
 	{
 		GameMode->PawnKilled(this);
 	}
+	
+	DetachFromControllerPendingDestroy();
 }
 
 // Set move speed

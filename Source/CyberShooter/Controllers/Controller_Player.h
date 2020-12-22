@@ -9,4 +9,6 @@ class CYBERSHOOTER_API AController_Player : public APlayerController
 {
 	GENERATED_BODY()
 	
+public:
+	virtual void GameHasEnded(class AActor* EndGameFocus = nullptr, bool bIsWinner = false) override;
 };

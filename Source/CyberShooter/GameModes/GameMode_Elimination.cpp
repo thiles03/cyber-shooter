@@ -4,7 +4,7 @@ void AGameMode_Elimination::PawnKilled(APawn *PawnKilled)
 {
     Super::PawnKilled(PawnKilled);
 
-    APlayerController *PlayerController = Cast<APlayerController>(PawnKilled);
+    APlayerController *PlayerController = Cast<APlayerController>(PawnKilled->GetController());
 
     if (PlayerController)
     {
