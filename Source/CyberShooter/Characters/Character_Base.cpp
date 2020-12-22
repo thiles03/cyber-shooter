@@ -63,9 +63,9 @@ void ACharacter_Base::Die()
 	{
 		GameMode->PawnKilled(this);
 	}
-
+	UE_LOG(LogTemp, Warning, TEXT("2"));
 	// Detach from controller
-	DetachFromControllerPendingDestroy();
+	//DetachFromControllerPendingDestroy();
 }
 
 // Set move speed

@@ -115,7 +115,10 @@ void ACharacter_Player::AttackStop()
 
 void ACharacter_Player::Die() 
 {
+	Grabber->Release(); // Drop any held objects first
+	UE_LOG(LogTemp, Warning, TEXT("1"));
 	Super::Die();
+	UE_LOG(LogTemp, Warning, TEXT("3"));
 }
 
 // Interact
@@ -227,4 +230,4 @@ void ACharacter_Player::WeaponTwo()
 	Firearm->SetOwner(this);
 }
 
-// Bazooka
+// TODO - Bazooka

@@ -11,4 +11,5 @@ class CYBERSHOOTER_API AGameMode_Elimination : public AGameMode_Base
 
 public:
 	virtual void PawnKilled(APawn *PawnKilled) override;
+
 };
