@@ -120,8 +120,8 @@ void ACharacter_Player::Die()
 
 	Super::Die();
 
-	// AController_Player *PlayerController = Cast<AController_Player>(GetController());
-	// PlayerController->SetPlayerEnabledState(false);
+	AController_Player *PlayerController = Cast<AController_Player>(GetController());
+	PlayerController->SetPlayerEnabledState(false);
 }
 
 // Interact

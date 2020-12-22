@@ -75,6 +75,7 @@ void UCombat::Attack()
 
 	if (Character->CombatType == ECombatType::MELEE)
 	{
+		// TODO
 		UE_LOG(LogTemp, Warning, TEXT("%s attacking"), *GetOwner()->GetName());
 		// Spawn particle effects
 		// Deal damage
