@@ -10,5 +10,5 @@ class CYBERSHOOTER_API AGameMode_Base : public AGameModeBase
 	GENERATED_BODY()
 
 public:
-	void PawnKilled(APawn *PawnKilled);
+	virtual void PawnKilled(APawn *PawnKilled);
 };

@@ -1,6 +1,7 @@
 #include "Character_Base.h"
 #include "Components/CapsuleComponent.h"
 #include "CyberShooter/Components/Combat.h"
+#include "CyberShooter/GameModes/GameMode_Base.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
@@ -53,6 +54,11 @@ void ACharacter_Base::Die()
 	IsDead = true;
 	DetachFromControllerPendingDestroy();
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	AGameMode_Base *GameMode = GetWorld()->GetAuthGameMode<AGameMode_Base>();
+	if (GameMode)
+	{
+		GameMode->PawnKilled(this);
+	}
 }
 
 // Set move speed
