@@ -43,5 +43,6 @@ private:
 
 	//FUNCTIONS
 	bool AttackTrace(FHitResult &Hit, FVector &AttackDirection);
-		
+
+	AController *GetOwnerController() const;	
 };

@@ -33,9 +33,10 @@ void UCombat::Attack()
 			UGameplayStatics::SpawnEmitterAttached(MuzzleFlash, Character->GetMesh(), TEXT("MuzzleSocket_Primary"));
 		}
 
-		FVector OUT AttackDirection;
-		FHitResult OUT Hit;
-		bool bSuccess = AttackTrace(Hit, AttackDirection);
+		// Calculate hit location and direction
+		FHitResult Hit;
+		FVector AttackDirection;
+		bool bSuccess = AttackTrace(OUT Hit, OUT AttackDirection);
 
 		// If Character hit
 		if (bSuccess)
@@ -51,7 +52,7 @@ void UCombat::Attack()
 			if (HitActor)
 			{
 				FPointDamageEvent DamageEvent(Damage, Hit, AttackDirection, nullptr);
-				HitActor->TakeDamage(Damage, DamageEvent, CharacterController, GetOwner());
+				HitActor->TakeDamage(Damage, DamageEvent, GetOwnerController(), GetOwner());
 			}
 		}
 	}
@@ -65,10 +66,11 @@ void UCombat::Attack()
 	}
 }
 
+// Line trace to target
 bool UCombat::AttackTrace(FHitResult &Hit, FVector &AttackDirection) 
 {
-	AController *CharacterController = Character->GetController();
-	if (!CharacterController) {return;}
+	AController *CharacterController = GetOwnerController();
+	if (!CharacterController) {return false;}
 		
 	// Get character view location and rotation
 	FVector CharacterViewLocation;
@@ -82,5 +84,12 @@ bool UCombat::AttackTrace(FHitResult &Hit, FVector &AttackDirection)
 	FCollisionQueryParams Params;
 	Params.AddIgnoredActor(GetOwner());
 	return GetWorld()->LineTraceSingleByChannel(OUT Hit, CharacterViewLocation, TraceEnd, ECollisionChannel::ECC_GameTraceChannel1, Params);
+}
+
+// Get character controller for owner of this component
+AController* UCombat::GetOwnerController() const
+{
+	if (!Character){return nullptr;}
+	return Character->GetController();
 }
 
