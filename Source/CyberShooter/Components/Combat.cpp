@@ -39,7 +39,6 @@ void UCombat::Attack()
 		AController *CharacterController = CharacterPawn->GetController();
 		if (!CharacterController) {return;}
 		
-		
 		// Get character view location and rotation
 		FVector CharacterViewLocation;
 		FRotator CharacterViewRotation;
