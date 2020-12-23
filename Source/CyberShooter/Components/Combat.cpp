@@ -82,3 +82,8 @@ void UCombat::Attack()
 	}
 }
 
+bool UCombat::AttackTrace(FHitResult &Hit, FVector &AttackDirection) 
+{
+	
+}
+

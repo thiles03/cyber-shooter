@@ -42,6 +42,6 @@ private:
 	float Damage = 20.f;
 
 	//FUNCTIONS
-
+	bool AttackTrace(FHitResult &Hit, FVector &AttackDirection);
 		
 };
