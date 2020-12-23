@@ -119,9 +119,6 @@ void ACharacter_Player::Die()
 	Grabber->Release(); // Drop any held objects first
 
 	Super::Die();
-
-	AController_Player *PlayerController = Cast<AController_Player>(GetController());
-	PlayerController->SetPlayerEnabledState(false);
 }
 
 // Interact
