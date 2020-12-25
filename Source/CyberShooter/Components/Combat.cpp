@@ -16,7 +16,7 @@ void UCombat::BeginPlay()
 	Character = Cast<ACharacter_Base>(GetOwner());
 }
 
-float UCombat::GetAttackRange() 
+float UCombat::GetAttackRange() const
 {
 	return AttackRange;
 }

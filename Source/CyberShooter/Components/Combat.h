@@ -18,7 +18,7 @@ public:
 	// FUNCTIONS
 	void Attack();
 
-	float GetAttackRange();
+	float GetAttackRange() const;
 
 protected:
 	// Called when the game starts
