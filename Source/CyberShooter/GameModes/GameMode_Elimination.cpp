@@ -16,14 +16,19 @@ void AGameMode_Elimination::PawnKilled(APawn *PawnKilled)
         EndGame(false);
     }
 
+    // If there are any enemys alive, return
     for (AController_EnemyAI *AIController : TActorRange<AController_EnemyAI>(GetWorld()))
     {
         bool IsDead = AIController->IsDead();
+
         if (!IsDead)
         {
             return;
         }
     }
+
+    // Player wins
+    EndGame(true);
 }
 
 // Handle win/lose
