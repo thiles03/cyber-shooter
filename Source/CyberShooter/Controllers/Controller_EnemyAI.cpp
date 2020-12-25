@@ -1,6 +1,7 @@
 #include "Controller_EnemyAI.h"
 #include "Kismet/GameplayStatics.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "CyberShooter/Characters/Character_Enemy.h"
 
 void AController_EnemyAI::BeginPlay()
 {
@@ -21,5 +22,10 @@ void AController_EnemyAI::Tick(float DeltaTime)
 
 bool AController_EnemyAI::IsDead() const
 {
-    
+    ACharacter_Enemy *ControlledEnemy = Cast<ACharacter_Enemy>(GetPawn());
+
+    if(ControlledEnemy)
+    {
+        return ControlledEnemy->GetIsDead();
+    }
 }
