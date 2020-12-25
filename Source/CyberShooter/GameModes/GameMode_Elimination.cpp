@@ -1,6 +1,7 @@
 #include "GameMode_Elimination.h"
 #include "EngineUtils.h"
 #include "GameFramework/Controller.h"
+#include "CyberShooter/Controllers/Controller_EnemyAI.h"
 
 void AGameMode_Elimination::PawnKilled(APawn *PawnKilled)
 {
@@ -13,6 +14,15 @@ void AGameMode_Elimination::PawnKilled(APawn *PawnKilled)
     if (PlayerController)
     {
         EndGame(false);
+    }
+
+    for (AController_EnemyAI *AIController : TActorRange<AController_EnemyAI>(GetWorld()))
+    {
+        bool IsDead = AIController->IsDead();
+        if (!IsDead)
+        {
+            return;
+        }
     }
 }
 
