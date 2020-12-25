@@ -41,6 +41,8 @@ public:
 	// Do damage to the character
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
 
+	bool GetIsDead() const;
+
 protected:
 	// VARIABLES
 	UPROPERTY(EditDefaultsOnly, Category = "Stats", meta = (AllowPrivateAccess = "true"))

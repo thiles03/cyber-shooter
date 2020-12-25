@@ -2,14 +2,19 @@
 #include "TimerManager.h"
 #include "Blueprint/UserWidget.h"
 
-// End game, start respawn timer and display lose screen
+// Display win/lose screen and begin restart timer
 void AController_Player::GameHasEnded(class AActor *EndGameFocus, bool bIsWinner)
 {
     Super::GameHasEnded(EndGameFocus, bIsWinner);
 
     if (bIsWinner)
     {
+        UUserWidget *WinScreen = CreateWidget(this, WinScreenClass);
 
+        if (WinScreen)
+        {
+            WinScreen->AddToViewport();
+        }
     }
     else
     {
@@ -19,9 +24,9 @@ void AController_Player::GameHasEnded(class AActor *EndGameFocus, bool bIsWinner
         {
             LoseScreen->AddToViewport();
         }
-
-        GetWorldTimerManager().SetTimer(RestartTimer, this, &APlayerController::RestartLevel, RestartDelay);
     }
+        
+    GetWorldTimerManager().SetTimer(RestartTimer, this, &APlayerController::RestartLevel, RestartDelay);
 }
 
 // Enable/disable player input

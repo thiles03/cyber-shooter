@@ -26,8 +26,7 @@ bool AController_EnemyAI::IsDead() const
 
     if(ControlledEnemy)
     {
-        return true;
-        
+        return ControlledEnemy->GetIsDead();
     }
 
     return true;

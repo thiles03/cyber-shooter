@@ -48,6 +48,11 @@ float ACharacter_Base::TakeDamage(float DamageAmount, struct FDamageEvent const 
 	return DamageToApply;
 }
 
+bool ACharacter_Base::GetIsDead() const
+{
+	return IsDead;
+}
+
 // Death handler
 void ACharacter_Base::Die()
 {
