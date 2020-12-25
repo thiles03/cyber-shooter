@@ -18,3 +18,8 @@ void AController_EnemyAI::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);
 }
+
+bool AController_EnemyAI::IsDead() const
+{
+    
+}
