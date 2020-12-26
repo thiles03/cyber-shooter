@@ -36,6 +36,9 @@ private:
 	UParticleSystem *ImpactEffect;
 
 	UPROPERTY(EditAnywhere)
+	USoundBase *MuzzleSound;
+
+	UPROPERTY(EditAnywhere)
 	float AttackRange = 200.f;
 
 	UPROPERTY()

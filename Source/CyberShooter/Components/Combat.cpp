@@ -27,10 +27,11 @@ void UCombat::Attack()
 
 	if (Character->CombatType == ECombatType::RANGED)
 	{
-		// Spawn muzzle VFX
-		if (MuzzleFlash)
+		// Spawn muzzle sound and VFX
+		if (MuzzleFlash && MuzzleSound)
 		{
 			UGameplayStatics::SpawnEmitterAttached(MuzzleFlash, Character->GetMesh(), TEXT("MuzzleSocket_Primary"));
+			UGameplayStatics::SpawnSoundAttached(MuzzleSound, Character->GetMesh(), TEXT("MuzzleSocket_Primary"));
 		}
 
 		// Calculate hit location and direction
