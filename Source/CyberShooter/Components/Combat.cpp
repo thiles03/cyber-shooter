@@ -60,10 +60,11 @@ void UCombat::AttackRanged()
 	// If Character hit
 	if (bSuccess)
 	{			
-		// Spawn impact VFX at hit location
+		// Spawn impact sound and VFX at hit location
 		if (ImpactEffect)
 		{
 			UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ImpactEffect, Hit.Location, (-AttackDirection).Rotation());
+			UGameplayStatics::PlaySoundAtLocation(GetWorld(), ImpactSound, Hit.Location);
 		}
 
 		// Do damage to hit actor

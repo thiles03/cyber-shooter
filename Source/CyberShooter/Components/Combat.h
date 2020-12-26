@@ -39,6 +39,9 @@ private:
 	USoundBase *MuzzleSound;
 
 	UPROPERTY(EditAnywhere)
+	USoundBase *ImpactSound;
+
+	UPROPERTY(EditAnywhere)
 	float AttackRange = 200.f;
 
 	UPROPERTY()
