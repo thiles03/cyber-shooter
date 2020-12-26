@@ -45,6 +45,10 @@ private:
 	float Damage = 20.f;
 
 	//FUNCTIONS
+	void AttackMelee();
+
+	void AttackRanged();
+
 	bool AttackTrace(FHitResult &Hit, FVector &AttackDirection);
 
 	AController *GetOwnerController() const;	

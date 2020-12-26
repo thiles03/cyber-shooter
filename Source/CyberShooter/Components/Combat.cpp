@@ -23,47 +23,56 @@ float UCombat::GetAttackRange() const
 
 void UCombat::Attack() 
 {
-	
-
 	if (Character->CombatType == ECombatType::RANGED)
 	{
-		// Spawn muzzle sound and VFX
-		if (MuzzleFlash && MuzzleSound)
-		{
-			UGameplayStatics::SpawnEmitterAttached(MuzzleFlash, Character->GetMesh(), TEXT("MuzzleSocket_Primary"));
-			UGameplayStatics::SpawnSoundAttached(MuzzleSound, Character->GetMesh(), TEXT("MuzzleSocket_Primary"));
-		}
-
-		// Calculate hit location and direction
-		FHitResult Hit;
-		FVector AttackDirection;
-		bool bSuccess = AttackTrace(OUT Hit, OUT AttackDirection);
-
-		// If Character hit
-		if (bSuccess)
-		{			
-			// Spawn impact VFX at hit location
-			if (ImpactEffect)
-			{
-				UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ImpactEffect, Hit.Location, (-AttackDirection).Rotation());
-			}
-
-			// Do damage to hit actor
-			AActor *HitActor = Hit.GetActor();
-			if (HitActor)
-			{
-				FPointDamageEvent DamageEvent(Damage, Hit, AttackDirection, nullptr);
-				HitActor->TakeDamage(Damage, DamageEvent, GetOwnerController(), GetOwner());
-			}
-		}
+		AttackRanged();
 	}
 
 	if (Character->CombatType == ECombatType::MELEE)
 	{
-		// TODO
-		UE_LOG(LogTemp, Warning, TEXT("%s attacking"), *GetOwner()->GetName());
-		// Spawn particle effects
-		// Deal damage
+		AttackMelee();
+	}
+}
+
+
+void UCombat::AttackMelee() 
+{
+	// TODO
+	UE_LOG(LogTemp, Warning, TEXT("%s attacking"), *GetOwner()->GetName());
+	// Spawn particle effects
+	// Deal damage
+}
+
+void UCombat::AttackRanged() 
+{
+	// Spawn muzzle sound and VFX
+	if (MuzzleFlash && MuzzleSound)
+	{
+		UGameplayStatics::SpawnEmitterAttached(MuzzleFlash, Character->GetMesh(), TEXT("MuzzleSocket_Primary"));
+		UGameplayStatics::SpawnSoundAttached(MuzzleSound, Character->GetMesh(), TEXT("MuzzleSocket_Primary"));
+	}
+
+	// Calculate hit location and direction
+	FHitResult Hit;
+	FVector AttackDirection;
+	bool bSuccess = AttackTrace(OUT Hit, OUT AttackDirection);
+
+	// If Character hit
+	if (bSuccess)
+	{			
+		// Spawn impact VFX at hit location
+		if (ImpactEffect)
+		{
+			UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ImpactEffect, Hit.Location, (-AttackDirection).Rotation());
+		}
+
+		// Do damage to hit actor
+		AActor *HitActor = Hit.GetActor();
+		if (HitActor)
+		{
+			FPointDamageEvent DamageEvent(Damage, Hit, AttackDirection, nullptr);
+			HitActor->TakeDamage(Damage, DamageEvent, GetOwnerController(), GetOwner());
+		}
 	}
 }
 
