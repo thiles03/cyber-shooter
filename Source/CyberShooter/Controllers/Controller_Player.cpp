@@ -2,6 +2,14 @@
 #include "TimerManager.h"
 #include "Blueprint/UserWidget.h"
 
+void AController_Player::BeginPlay()
+{
+    Super::BeginPlay();
+
+    UUserWidget *HUD = CreateWidget(this, HUDClass);
+    HUD->AddToViewport();
+}
+
 // Display win/lose screen and begin restart timer
 void AController_Player::GameHasEnded(class AActor *EndGameFocus, bool bIsWinner)
 {
@@ -25,7 +33,7 @@ void AController_Player::GameHasEnded(class AActor *EndGameFocus, bool bIsWinner
             LoseScreen->AddToViewport();
         }
     }
-        
+
     GetWorldTimerManager().SetTimer(RestartTimer, this, &APlayerController::RestartLevel, RestartDelay);
 }
 
