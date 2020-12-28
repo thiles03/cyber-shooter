@@ -6,14 +6,20 @@ void AController_Player::BeginPlay()
 {
     Super::BeginPlay();
 
-    UUserWidget *HUD = CreateWidget(this, HUDClass);
-    HUD->AddToViewport();
+    HUD = CreateWidget(this, HUDClass);
+
+    if(HUD)
+    {
+        HUD->AddToViewport();
+    }
 }
 
 // Display win/lose screen and begin restart timer
 void AController_Player::GameHasEnded(class AActor *EndGameFocus, bool bIsWinner)
 {
     Super::GameHasEnded(EndGameFocus, bIsWinner);
+
+    HUD->RemoveFromViewport();
 
     if (bIsWinner)
     {
