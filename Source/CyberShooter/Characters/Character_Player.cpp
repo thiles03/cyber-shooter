@@ -75,7 +75,7 @@ void ACharacter_Player::SetupPlayerInputComponent(UInputComponent *PlayerInputCo
 }
 
 // Get health percentage between 0 and 1
-bool ACharacter_Player::GetHealthPercent() const
+float ACharacter_Player::GetHealthPercent() const
 {
 	return CurrentHealth / MaxHealth;
 }

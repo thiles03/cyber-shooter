@@ -29,7 +29,7 @@ public:
 	void TimelineFloatReturn(float Value);
 
 	UFUNCTION(BlueprintPure)
-	bool GetHealthPercent() const;	
+	float GetHealthPercent() const;	
 
 protected:
 	// Called when the game starts or when spawned
