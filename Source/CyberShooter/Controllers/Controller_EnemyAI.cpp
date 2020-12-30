@@ -3,6 +3,7 @@
 #include "BehaviorTree/BlackboardComponent.h"
 #include "CyberShooter/Characters/Character_Enemy.h"
 
+// Run AI behaviour and set controlled character's start location
 void AController_EnemyAI::BeginPlay()
 {
     Super::BeginPlay();
@@ -20,6 +21,7 @@ void AController_EnemyAI::Tick(float DeltaTime)
     Super::Tick(DeltaTime);
 }
 
+// Dead check
 bool AController_EnemyAI::IsDead() const
 {
     ACharacter_Enemy *ControlledEnemy = Cast<ACharacter_Enemy>(GetPawn());
