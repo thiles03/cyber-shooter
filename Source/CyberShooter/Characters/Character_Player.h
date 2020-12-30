@@ -28,6 +28,9 @@ public:
 	UFUNCTION()
 	void TimelineFloatReturn(float Value);
 
+	UFUNCTION(BlueprintPure)
+	bool GetHealthPercent() const;	
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

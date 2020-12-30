@@ -74,6 +74,12 @@ void ACharacter_Player::SetupPlayerInputComponent(UInputComponent *PlayerInputCo
 	PlayerInputComponent->BindAction("Weapon2", IE_Pressed, this, &ACharacter_Player::WeaponTwo);
 }
 
+// Get health percentage between 0 and 1
+bool ACharacter_Player::GetHealthPercent() const
+{
+	return CurrentHealth / MaxHealth;
+}
+
 // Aim weapon
 void ACharacter_Player::Aim()
 {
