@@ -70,6 +70,7 @@ void ACharacter_Player::SetupPlayerInputComponent(UInputComponent *PlayerInputCo
 	PlayerInputComponent->BindAction("Aim", IE_Pressed, this, &ACharacter_Player::Aim);
 	PlayerInputComponent->BindAction("Aim", IE_Released, this, &ACharacter_Player::AimReset);
 	PlayerInputComponent->BindAction("Attack", IE_Pressed, this, &ACharacter_Player::Attack);
+	PlayerInputComponent->BindAction("Attack", IE_Released, this, &ACharacter_Player::AttackStop);
 	PlayerInputComponent->BindAction("Weapon1", IE_Pressed, this, &ACharacter_Player::WeaponOne);
 	PlayerInputComponent->BindAction("Weapon2", IE_Pressed, this, &ACharacter_Player::WeaponTwo);
 }
@@ -116,7 +117,7 @@ void ACharacter_Player::Attack()
 // Stop firing
 void ACharacter_Player::AttackStop()
 {
-	IsAttacking = true;
+	IsAttacking = false;
 }
 
 // Die
