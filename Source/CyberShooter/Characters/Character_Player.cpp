@@ -70,7 +70,7 @@ void ACharacter_Player::SetupPlayerInputComponent(UInputComponent *PlayerInputCo
 	PlayerInputComponent->BindAction("Aim", IE_Pressed, this, &ACharacter_Player::Aim);
 	PlayerInputComponent->BindAction("Aim", IE_Released, this, &ACharacter_Player::AimReset);
 	PlayerInputComponent->BindAction("Attack", IE_Pressed, this, &ACharacter_Player::Attack);
-	PlayerInputComponent->BindAction("Attack", IE_Released, this, &ACharacter_Player::AttackStop);
+	//PlayerInputComponent->BindAction("Attack", IE_Released, this, &ACharacter_Player::AttackStop);
 	PlayerInputComponent->BindAction("Weapon1", IE_Pressed, this, &ACharacter_Player::WeaponOne);
 	PlayerInputComponent->BindAction("Weapon2", IE_Pressed, this, &ACharacter_Player::WeaponTwo);
 }
@@ -79,6 +79,11 @@ void ACharacter_Player::SetupPlayerInputComponent(UInputComponent *PlayerInputCo
 float ACharacter_Player::GetHealthPercent() const
 {
 	return CurrentHealth / MaxHealth;
+}
+
+void ACharacter_Player::SetAttacking(bool Attacking) 
+{
+	IsAttacking = Attacking;
 }
 
 // Aim weapon
@@ -100,6 +105,7 @@ void ACharacter_Player::AimReset()
 // Fire weapon
 void ACharacter_Player::Attack()
 {
+	if (IsAttacking) {return;}
 	IsAttacking = true;
 
 	if (CombatType == ECombatType::PLAYER)
@@ -114,7 +120,7 @@ void ACharacter_Player::Attack()
 	}
 }
 
-// Stop firing
+// Stop firing - UNUSED
 void ACharacter_Player::AttackStop()
 {
 	IsAttacking = false;

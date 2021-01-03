@@ -29,7 +29,10 @@ public:
 	void TimelineFloatReturn(float Value);
 
 	UFUNCTION(BlueprintPure)
-	float GetHealthPercent() const;	
+	float GetHealthPercent() const;
+
+	UFUNCTION(BlueprintCallable)
+	void SetAttacking(bool Attacking);
 
 protected:
 	// Called when the game starts or when spawned
