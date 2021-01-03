@@ -18,7 +18,6 @@ AFirearm::AFirearm()
 // Spawn particle FX and handle weapon firing
 void AFirearm::Fire()
 {
-	UGameplayStatics::SpawnEmitterAttached(MuzzleFlash, Mesh, TEXT("MuzzleSocket")); // Spawn muzzle VFX
 
 	// Get the player controller
 	APawn *PlayerPawn = Cast<APawn>(GetOwner());
@@ -36,6 +35,8 @@ void AFirearm::Fire()
 	FHitResult Hit;
 	bool bSuccess = GetWorld()->LineTraceSingleByChannel(OUT Hit, PlayerViewLocation, TraceEnd, ECollisionChannel::ECC_GameTraceChannel1);
 
+	UGameplayStatics::SpawnEmitterAttached(MuzzleFlash, Mesh, TEXT("MuzzleSocket")); // Spawn muzzle VFX
+	
 	if (bSuccess)
 	{
 		// Spawn impact VFX at hit location

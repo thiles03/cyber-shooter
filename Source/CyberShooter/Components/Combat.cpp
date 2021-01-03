@@ -21,6 +21,7 @@ float UCombat::GetAttackRange() const
 	return AttackRange;
 }
 
+// Attack based on CombatType
 void UCombat::Attack() 
 {
 	if (Character->CombatType == ECombatType::RANGED)
@@ -34,7 +35,7 @@ void UCombat::Attack()
 	}
 }
 
-
+// Mellee attack
 void UCombat::AttackMelee() 
 {
 	// TODO
@@ -43,6 +44,7 @@ void UCombat::AttackMelee()
 	// Deal damage
 }
 
+// Ranged attack
 void UCombat::AttackRanged() 
 {
 	// Spawn muzzle sound and VFX
