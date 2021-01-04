@@ -1,6 +1,7 @@
 #include "Combat.h"
 #include "CyberShooter/Characters/Character_Base.h"
 #include "Kismet/GameplayStatics.h"
+#include "TimerManager.h"
 
 // Constructor
 UCombat::UCombat()
@@ -79,6 +80,11 @@ void UCombat::AttackRanged()
 	}
 }
 
+void UCombat::AttackReset() 
+{
+	GetWorldTimerManager().SetTimer(AttackTimer, this, &APlayerController::RestartLevel, AttackDelay);
+}
+
 // Line trace to target
 bool UCombat::AttackTrace(FHitResult &Hit, FVector &AttackDirection) 
 {
@@ -105,4 +111,3 @@ AController* UCombat::GetOwnerController() const
 	if (!Character){return nullptr;}
 	return Character->GetController();
 }
-

@@ -43,7 +43,7 @@ void AController_Player::GameHasEnded(class AActor *EndGameFocus, bool bIsWinner
     GetWorldTimerManager().SetTimer(RestartTimer, this, &APlayerController::RestartLevel, RestartDelay);
 }
 
-// Enable/disable player input
+// Enable/disable player input - UNUSED
 void AController_Player::SetPlayerEnabledState(bool IsEnabled)
 {
     if (IsEnabled)

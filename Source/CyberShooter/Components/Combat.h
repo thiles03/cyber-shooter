@@ -47,10 +47,17 @@ private:
 	UPROPERTY(EditAnywhere)
 	float Damage = 20.f;
 
+	UPROPERTY(EditAnywhere)
+	float AttackDelay;
+
+	FTimerHandle AttackTimer;
+
 	//FUNCTIONS
 	void AttackMelee();
 
 	void AttackRanged();
+
+	void AttackReset();
 
 	bool AttackTrace(FHitResult &Hit, FVector &AttackDirection);
 
