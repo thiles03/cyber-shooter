@@ -78,11 +78,16 @@ void UCombat::AttackRanged()
 			HitActor->TakeDamage(Damage, DamageEvent, GetOwnerController(), GetOwner());
 		}
 	}
+
+	// Attack cooldown
+	GetWorld()->GetTimerManager().SetTimer(AttackTimer, this, &UCombat::AttackReset, AttackDelay, false);
 }
 
+// Reset owning character's IsAttacking variable
 void UCombat::AttackReset() 
 {
-	GetWorldTimerManager().SetTimer(AttackTimer, this, &APlayerController::RestartLevel, AttackDelay);
+	bool Attacking = false;
+	Cast<ACharacter_Base>(GetOwner())->SetAttacking(Attacking);
 }
 
 // Line trace to target

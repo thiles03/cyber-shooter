@@ -81,11 +81,6 @@ float ACharacter_Player::GetHealthPercent() const
 	return CurrentHealth / MaxHealth;
 }
 
-void ACharacter_Player::SetAttacking(bool Attacking) 
-{
-	IsAttacking = Attacking;
-}
-
 // Aim weapon
 void ACharacter_Player::Aim()
 {
@@ -107,6 +102,7 @@ void ACharacter_Player::Attack()
 {
 	if (IsAttacking) {return;}
 	IsAttacking = true;
+
 
 	if (CombatType == ECombatType::PLAYER)
 	{

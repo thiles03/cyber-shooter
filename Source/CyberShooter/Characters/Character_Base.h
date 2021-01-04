@@ -44,6 +44,9 @@ public:
 	UFUNCTION(BlueprintPure)
 	bool GetIsDead() const;
 
+	UFUNCTION(BlueprintCallable)
+	void SetAttacking(bool Attacking);
+
 protected:
 	// VARIABLES
 	UPROPERTY(EditDefaultsOnly, Category = "Stats", meta = (AllowPrivateAccess = "true"))
@@ -54,6 +57,9 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, Category = "Stats")
 	float MaxSpeed = 600.f;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon", meta = (AllowPrivateAccess = "true"))
+	bool IsAttacking = false;
 
 	// FUNCTIONS
 	// Called when the game starts or when spawned

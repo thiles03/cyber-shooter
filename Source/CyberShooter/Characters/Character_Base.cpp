@@ -33,6 +33,11 @@ void ACharacter_Base::SetupPlayerInputComponent(UInputComponent *PlayerInputComp
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }
 
+void ACharacter_Base::SetAttacking(bool Attacking) 
+{
+	IsAttacking = Attacking;
+}
+
 // Do damage to the character
 float ACharacter_Base::TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEvent, class AController *EventInstigator, AActor *DamageCauser)
 {

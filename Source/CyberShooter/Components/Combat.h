@@ -48,7 +48,7 @@ private:
 	float Damage = 20.f;
 
 	UPROPERTY(EditAnywhere)
-	float AttackDelay;
+	float AttackDelay = 0.9f;
 
 	FTimerHandle AttackTimer;
 
